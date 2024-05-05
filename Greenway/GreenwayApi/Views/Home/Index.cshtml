@@ -1,16 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<main class="container-home text-center text-light">
-   
-    <section class="section-badge-home">
-        <h1>ESCREVER ALGO</h1>
+<section class="section-badge-home">
+    <div class="content-left">
+        <h1>Seja <span class="slogan-home">Green</span></h1>
 
         <img src="~/img/BadgeCertificado_QRCode.svg" alt="Badge QRCode - Greenway" class="img-badge-home" />
 
-        <p class="paragraph-home">O Greenway é uma inovadora plataforma SaaS projetada para auxiliar empresas na gestão de suas operações rumo à sustentabilidade.</p>
+        <p class="paragraph-home">O Greenway é uma inovadora plataforma SaaS projetada para auxiliar 
+            empresas na gestão de suas operações rumo à sustentabilidade.</p>
+    </div>
 
-    </section>
-</main>
+    <div class="content-right">
+        <div class="content-button-home">
+            <div class="box-button">
+                <a asp-area="" asp-controller="Company" asp-action="Cadastrar"><img src="~/img/company.svg" alt="Icon Company" class="icon-button" /></a>
+                <a asp-area="" asp-controller="Company" asp-action="Cadastrar" class="button-link">Cadastrar Empresa</a>
+            </div>
+            <div class="box-button">
+                <a asp-area="" asp-controller="User" asp-action="Cadastrar"><img src="~/img/user.svg" alt="Icon User" class="icon-button" /></a>
+                <a asp-area="" asp-controller="User" asp-action="Cadastrar" class="button-link">Cadastrar Usuário</a>
+            </div>
+            <div class="box-button">
+                <a asp-area="" asp-controller="Product" asp-action="Cadastrar"><img src="~/img/product.svg" alt="Icon Product" class="icon-button" /></a>
+                <a asp-area="" asp-controller="Product" asp-action="Cadastrar" class="button-link">Cadastrar Produto</a>
+            </div>
+        </div>
+    </div>
+
+</section>
 

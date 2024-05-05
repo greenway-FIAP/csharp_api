@@ -1,0 +1,15 @@
+/* PÁGINA DE PRIVACIDADE */
+
+.content-privacy {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

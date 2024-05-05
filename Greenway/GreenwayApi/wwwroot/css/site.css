@@ -11,29 +11,32 @@ html {
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
-
+/*
 html {
   position: relative;
   min-height: 100%;
-}
+}*/
 
 body {
-  background-color: #3F4E4F;
-  margin-bottom: 60px;
+    font-family: Inter;
+    background-color: #3F4E4F;
+    margin-bottom: 60px;
+   height: 85vh;
 }
 
-h1, h2, h3 {
+/* Componentes Gerais */
+
+h1, h2 {
     color: #ffffff;
 }
 
 p, a {
-    font-family: Inter;
+    text-decoration: none;
     color: #cdcdcd !important;
     transition: all 0.4s !important;
 }
 
 a {
-    text-decoration: none;
     font-weight: bold;
 }
 
@@ -41,32 +44,16 @@ a:hover{
     color: #FFFFFF !important;
 }
 
-/* Página HOME */
-
-.container-home {
+.main-content {
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: center;
-}
-
-.section-badge-home {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
 }
 
-.img-badge-home{
-    min-width: 100px;
-    max-width: 330px;
-}
-
-.paragraph-home {
-    width: 50%;
-}
-
-.footer-container{
+.footer-container {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 }

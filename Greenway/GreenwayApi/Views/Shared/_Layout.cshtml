@@ -3,10 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GreenwayApi</title>
+    <title>@ViewData["Title"] - Greenway</title>
+    <link rel="shortcut icon" href="~/img/Logo_Greenway.png" type="image/x-icon" />
+    <link href="~/css/reset.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/privacidade.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/company.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/user.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/product.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GreenwayApi.styles.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +21,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Greenway_Text.png" alt="Alternate Text" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,46 +31,44 @@
                 <div class="navbar-collapse collapse show" id="navbarColor02">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">User</a>
+                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Empresa</a>
                             <div class="dropdown-menu show" data-bs-popper="static">
-                                <a class="dropdown-item" href="#">Cadastrar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Company" asp-action="Cadastrar">Cadastrar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Listar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Index">Listar</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Company</a>
+                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Usuário</a>
                             <div class="dropdown-menu show" data-bs-popper="static">
-                                <a class="dropdown-item" href="#">Cadastrar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Cadastrar">Cadastrar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Listar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Listar</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Product</a>
+                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Produto</a>
                             <div class="dropdown-menu show" data-bs-popper="static">
-                                <a class="dropdown-item" href="#">Cadastrar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Cadastrar">Cadastrar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Listar</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Index">Listar</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!--class="pb-3"-->
+    <main role="main" class="main-content">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="footer-container">
