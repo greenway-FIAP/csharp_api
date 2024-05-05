@@ -18,5 +18,55 @@ html {
 }
 
 body {
+  background-color: #3F4E4F;
   margin-bottom: 60px;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+}
+
+p, a {
+    font-family: Inter;
+    color: #cdcdcd !important;
+    transition: all 0.4s !important;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover{
+    color: #FFFFFF !important;
+}
+
+/* Página HOME */
+
+.container-home {
+    display: flex;
+    justify-content: center;
+}
+
+.section-badge-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.img-badge-home{
+    min-width: 100px;
+    max-width: 330px;
+}
+
+.paragraph-home {
+    width: 50%;
+}
+
+.footer-container{
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
