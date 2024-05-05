@@ -23,6 +23,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-    run: dotnet build path/to/GreenwayApi.csproj --no-restore
+    run: |
+        cd Greenway # Substitua "YourProjectDirectory" pelo nome do diretório onde está seu projeto
+        dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        cd Greenway # Substitua "YourProjectDirectory" pelo nome do diretório onde está seu projeto
+        dotnet test --no-build --verbosity normal
