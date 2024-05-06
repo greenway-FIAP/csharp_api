@@ -6,4 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\CompanyController - Cópia %282%29.cs" />
+    <Compile Remove="Controllers\CompanyController - Cópia.cs" />
+    <Compile Remove="Controllers\HomeController1.cs" />
+    <Compile Remove="Views\Home\Cadastrar.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\Cadastrar.cshtml" />
+  </ItemGroup>
+
 </Project>

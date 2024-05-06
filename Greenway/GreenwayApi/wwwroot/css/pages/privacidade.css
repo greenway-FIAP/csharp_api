@@ -1,15 +1,23 @@
 /* PÁGINA DE PRIVACIDADE */
 
-.content-privacy {
+.policy-privacy-content {
+    overflow: auto;
+    padding-top: 30vh;
+    padding-bottom: 5vh;
+    margin: 0 20px 0 20px;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    gap: 40px;
+    align-items: center;
 }
 
-section {
+.policy-privacy-content div{
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 10px;
 }
