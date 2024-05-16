@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿eyeBtn.onclick = function () {
+    let pswdLogin = document.getElementById("pswd");
+    let buttonEye = document.getElementById("eyeBtn");
 
-// Write your JavaScript code.
+    if (pswdLogin.type === "password") {
+        pswdLogin.setAttribute("type", "text");
+        buttonEye.classList.add("hdPwdLgn");
+    } else {
+        pswdLogin.setAttribute("type", "password");
+        buttonEye.classList.remove("hdPwdLgn");
+    }
+};

@@ -7,10 +7,10 @@ public class UserController : Controller
 {
 	//Lista de Empresa para simular o banco de dados
 	private static List<User> _lista = new List<User>();
-	private static int _id = 0; //Controla o ID
+	private static int _id = 0; // Controla o ID
 
-	// GET: UserController/Details/5
-	[HttpGet]
+    // GET: UserController/Details/5
+    [HttpGet]
 	public ActionResult Details(int id)
 	{
 		return View();

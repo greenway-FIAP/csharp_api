@@ -1,0 +1,20 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edição de Produtos";
+}
+
+<section class="section-editar-greenway">
+    <h1>Edição de <span class="slogan-home">Produtos</span></h1>
+    <div class="content-alert-sucess" id="content-alert-sucess">
+        <p id="alert-message">@TempData["msg"]</p>
+    </div>
+
+    <form asp-action="editar" class="form-content-greenway">
+        <partial name="_Form" />
+
+        <div class="form-content-button">
+            <button type="submit" class="button-input">Editar</button>
+            <a asp-action="index" class="button-input">Cancelar</a>
+        </div>
+    </form>
+</section>

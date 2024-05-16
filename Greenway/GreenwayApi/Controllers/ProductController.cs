@@ -9,8 +9,8 @@ public class ProductController : Controller
 	private static List<Product> _lista = new List<Product>();
 	private static int _id = 0; //Controla o ID
 
-	// GET: UserController/Details/5
-	[HttpGet]
+    // GET: UserController/Details/5
+    [HttpGet]
 	public ActionResult Details(int id)
 	{
 		return View();

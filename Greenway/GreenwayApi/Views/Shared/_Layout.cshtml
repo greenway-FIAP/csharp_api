@@ -7,13 +7,13 @@
     <link rel="shortcut icon" href="~/img/Logo_Greenway.png" type="image/x-icon" />
     <link href="~/css/reset.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/hamburguer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/home.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/privacidade.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/pages/company.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/pages/user.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/pages/product.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GreenwayApi.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/listagem.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/formularios.css" asp-append-version="true" />
+    <!--<link rel="stylesheet" href="~/GreenwayApi.styles.css" asp-append-version="true" />-->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -28,27 +28,27 @@
                     <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
 
                     <div class="dropdown">
-                        <a class="dropbtn">Empresa<span class="dropdown-icon"></span></a>
+                        <a class="menu-items-link">Empresa<span class="dropdown-icon"></span></a>
                         <div class="dropdown-content">
-                            <a asp-area="" asp-controller="Company" asp-action="Cadastrar"><img src="~/img/ico-cadastrar.svg" alt="" class="icon-item-dropdown">Cadastrar</a>
+                            <a asp-area="" asp-controller="Company" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
                             <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="Company" asp-action="Index"><img src="~/img/ico-listar.svg" alt="" class="icon-item-dropdown">Listar</a>
+                            <a asp-area="" asp-controller="Company" asp-action="Index" class="menu-items-link"><img src="~/img/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
                         </div>
                     </div>
                     <div class="dropdown">
-                        <a class="dropbtn">Usuário<span class="dropdown-icon"></span></a>
+                        <a class="menu-items-link">Usuário<span class="dropdown-icon"></span></a>
                         <div class="dropdown-content">
-                            <a asp-area="" asp-controller="User" asp-action="Cadastrar"><img src="~/img/ico-cadastrar.svg" alt="" class="icon-item-dropdown">Cadastrar</a>
+                            <a asp-area="" asp-controller="User" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
                             <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="User" asp-action="Index"><img src="~/img/ico-listar.svg" alt="" class="icon-item-dropdown">Listar</a>
+                            <a asp-area="" asp-controller="User" asp-action="Index" class="menu-items-link"><img src="~/img/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
                         </div>
                     </div>
                     <div class="dropdown">
-                        <a class="dropbtn">Produto<span class="dropdown-icon"></span></a>
+                        <a class="menu-items-link">Produto<span class="dropdown-icon"></span></a>
                         <div class="dropdown-content">
-                            <a asp-area="" asp-controller="Product" asp-action="Cadastrar"><img src="~/img/ico-cadastrar.svg" alt="" class="icon-item-dropdown">Cadastrar</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
                             <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="Product" asp-action="Index"><img src="~/img/ico-listar.svg" alt="" class="icon-item-dropdown">Listar</a>
+                            <a asp-area="" asp-controller="Product" asp-action="Index" class="menu-items-link"><img src="~/img/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
                         </div>
                     </div>
                     <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
@@ -56,20 +56,24 @@
             </div>
         </nav>
     </header>
-    <!--class="pb-3"-->
+
     <main role="main" class="main-content">
         @RenderBody()
     </main>
 
     <footer class="footer-content">
-        <div class="footer-container">
-            <p>Technos &copy; 2024 - <a asp-area="" asp-controller="Home" asp-action="Index">Greenway</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
-        </div>
+        <ul class="footer-container">
+            <li><p>&copy; 2024 · Technos</p></li>
+            <li class="footer-content-divisor"></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Greenway</a></li>
+            <li class="footer-content-divisor"></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+        </ul>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/hamburguer.js" asp-append-version="true"></script>
+    <script src="~/js/responsive.js" asp-append-version="true"></script>
+    <script src="~/js/confirm-page.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/b83066dc1c.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

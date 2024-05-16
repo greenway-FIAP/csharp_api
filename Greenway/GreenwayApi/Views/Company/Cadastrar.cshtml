@@ -3,4 +3,17 @@
 	ViewData["Title"] = "Cadastro de Empresas";
 }
 
-<h1>Cadastro de Empresas</h1>
+<section class="section-cadastrar-greenway">
+    <h1>Cadastro de <span class="slogan-home">Empresas</span></h1>
+    <div class="content-alert-sucess" id="content-alert-sucess">
+        <p id="alert-message">@TempData["msg"]</p>
+    </div>
+
+    <form asp-action="cadastrar" class="form-content-greenway">
+        <partial name="_Form" />
+        <div class="form-content-button">
+            <button type="submit" class="button-input" onclick="showConfirmOverlay()">Cadastrar Empresa</button>
+            <a asp-action="index" class="button-input">Lista de Empresas</a>
+        </div>
+    </form>
+</section>

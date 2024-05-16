@@ -11,30 +11,36 @@ html {
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
-/*
-html {
-  position: relative;
-  min-height: 100%;
-}*/
 
 body {
-    font-family: Inter;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
     background-color: #3F4E4F;
-    height: 75vh;
-    /* min-height: 100vh */
+
+    font-family: Inter;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Componentes Gerais */
 
 h1, h2 {
+    text-shadow: 1px 1px 4px black;
+    text-align: center;
     font-size: calc(1.375rem + 1.5vw);
     color: #ffffff;
 }
 
-p, a {
+a, p {
     text-decoration: none;
-    color: #cdcdcd !important;
-    transition: all 0.4s !important;
+    color: #cdcdcd;
+    transition: all 0.4s;
 }
 
 a {
@@ -43,7 +49,7 @@ a {
 }
 
 a:hover{
-    color: #FFFFFF !important;
+    color: #FFFFFF;
 }
 
 /* HEADER */
@@ -59,22 +65,33 @@ a:hover{
 .main-content {
     width: 100%;
     height: 100%;
-    padding: 10vh 0 10vh 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .footer-content {
-    height: 100px;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 20px 25px;
+    /* Colorização de Fundo e Borda do Footer */
     border-top: 2px solid #e5e5e5;
+    /*margin-top: 20px;*/
 }
 
 .footer-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.footer-content-divisor {
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-left: 2px solid #cdcdcd;
 }
