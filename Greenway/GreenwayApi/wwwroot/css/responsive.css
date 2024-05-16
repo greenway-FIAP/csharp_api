@@ -10,7 +10,10 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+<<<<<<< HEAD
     padding: 0.5rem;
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     gap: 10px;
 }
 
@@ -20,15 +23,26 @@
     background-color: transparent;
 }
 
+<<<<<<< HEAD
 .menu-hamburguer img {
+=======
+.icon-hamburguer {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 50px;
     height: 50px;
 }
 
+<<<<<<< HEAD
 .menu-nav .menu-items-content {
     display: flex;
     justify-content: center;
     align-items: center;
+=======
+.menu-items-content {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     gap: 20px;
 }
 
@@ -38,7 +52,11 @@
 
 /* CSS for the navigation links */
 
+<<<<<<< HEAD
 .menu-nav .menu-logo {
+=======
+.menu-logo {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
     font-size: 1.25rem;
@@ -46,6 +64,7 @@
     white-space: nowrap;
 }
 
+<<<<<<< HEAD
 .menu-nav a {
     color: #cdcdcd;
     text-decoration: none;
@@ -53,6 +72,21 @@
 }
 
 .menu-nav .dropdown-icon::after {
+=======
+.menu-items-link {
+    color: #cdcdcd;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.menu-items-link:hover {
+    color: #ffffff;
+}
+
+.dropdown-icon::after {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     display: inline-block;
     margin-left: .255em;
     vertical-align: .255em;
@@ -63,10 +97,13 @@
     border-left: .3em solid transparent;
 }
 
+<<<<<<< HEAD
 .menu-nav a:hover {
     color: #fff;
 }
 
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 /* CSS for the dropdown menu */
 .dropdown {
     position: relative;
@@ -92,7 +129,11 @@
 }
 
 /* CSS for the dropdown links */
+<<<<<<< HEAD
 .dropdown-content a {
+=======
+.dropdown-content .menu-items-link {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     color: #bdc0c2;
     padding: 0.25rem 1rem;
     text-decoration: none;
@@ -106,7 +147,11 @@
 }
 
 /* CSS for the dropdown links on hover */
+<<<<<<< HEAD
 .dropdown-content a:hover {
+=======
+.dropdown-content .menu-items-link:hover {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     color: #FFFFFF;
     background-color: #ffffff26;
 }
@@ -129,6 +174,7 @@
 
 /* CSS for the mobile hamburger menu */
 @media (max-width: 767px) {
+<<<<<<< HEAD
     h1, h2 {
         margin-top: 20px;
     }
@@ -161,20 +207,26 @@
     }
     
     /* Main Principal */
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     .menu-nav {
         justify-content: flex-start;
         align-items: flex-start;
     }
 
+<<<<<<< HEAD
     .menu-nav-content {
         gap: 5vw;
     }
 
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     .menu-hamburguer {
         display: block;
         cursor: pointer;
     }
 
+<<<<<<< HEAD
     .content-left, .content-right {
         width: 80%;
     }
@@ -185,6 +237,9 @@
 
     .menu-nav .menu-items-content {
         width: 100%;
+=======
+    .menu-nav .menu-items-content {
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
         display: none;
         flex-direction: column;
         align-items: flex-start;
@@ -193,6 +248,7 @@
 
     .dropdown-content {
         position: static;
+<<<<<<< HEAD
         width: 88vw;
         z-index: 0;
     }
@@ -202,6 +258,25 @@
     }
 }
 
+=======
+        width: 92vw;
+        z-index: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .menu-nav .menu-logo {
+        width: 65vw;
+    }
+
+    .menu-nav-content{
+        gap: 5vw;
+    }
+
+    .content-left, .content-right {
+        width: 80%;
+    }
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 
 @media (max-width: 360px){
     .menu-nav .menu-logo {
@@ -213,7 +288,11 @@
     }
 
     .menu-hamburguer {
+<<<<<<< HEAD
         padding: 0;
+=======
+        padding: 0
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     }
 
     .menu-hamburguer img {
@@ -227,6 +306,7 @@
     .icon-button {
         display: none;
     }
+<<<<<<< HEAD
 
     .dropdown-content {
         width: 75vw;
@@ -239,4 +319,6 @@
     .footer-content {
         height: 25vh;
     }
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 }

@@ -1,5 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -13,10 +20,13 @@ html {
 }
 
 body {
+<<<<<<< HEAD
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
+=======
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 100vw;
     height: 100vh;
     background-color: #3F4E4F;
@@ -31,6 +41,10 @@ body {
 /* Componentes Gerais */
 
 h1, h2 {
+<<<<<<< HEAD
+=======
+    margin-bottom: 20px;
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     text-shadow: 1px 1px 4px black;
     text-align: center;
     font-size: calc(1.375rem + 1.5vw);
@@ -62,6 +76,8 @@ a:hover{
     display: block;
 }
 
+/* CONTAINER PRINCIPAL */
+
 .main-content {
     width: 100%;
     height: 100%;
@@ -70,8 +86,14 @@ a:hover{
     align-items: center;
 }
 
+/* FOOTER */
+
 .footer-content {
+<<<<<<< HEAD
     width: 100%;
+=======
+    height: 20vh;
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -89,9 +111,48 @@ a:hover{
     align-items: center;
 }
 
+<<<<<<< HEAD
 .footer-content-divisor {
     height: 40px;
     margin-left: 10px;
     margin-right: 10px;
     border-left: 2px solid #cdcdcd;
+=======
+/* CAMPO DE PESQUISA */
+
+.header-form-search {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-search[type="search"] {
+    outline: none;
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 4px 0 0 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Estilo para o bot�o de pesquisa */
+.button-search-ico[type="submit"] {
+    padding: 6px 15px;
+    border: 0;
+    border-radius: 0 4px 4px 0;
+    background-color: #00d980;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+
+.button-search-ico[type="submit"]:hover {
+    background-color: #00d980;
+}
+
+.search-ico {
+    width: 20px;
+    height: 20px;
+>>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 }
