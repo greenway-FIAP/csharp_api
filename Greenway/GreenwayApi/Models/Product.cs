@@ -1,8 +1,11 @@
-﻿namespace GreenwayApi.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace GreenwayApi.Models;
 
 public class Product
 {
-	public int id_product { get; set; }
+    [HiddenInput]
+    public int id_product { get; set; }
 	public string? ds_name { get; set; }
 	public string? tx_description { get; set; }
 	public decimal? vl_sale_price { get; set; }

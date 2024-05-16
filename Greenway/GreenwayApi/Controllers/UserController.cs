@@ -1,5 +1,6 @@
 ﻿using GreenwayApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GreenwayApi.Controllers;
 
@@ -8,6 +9,29 @@ public class UserController : Controller
 	//Lista de Empresa para simular o banco de dados
 	private static List<User> _lista = new List<User>();
 	private static int _id = 0; // Controla o ID
+
+    [HttpGet] //Abrir o formulário com os dados preenchidos
+    public IActionResult PesquisaNome(string searchString)
+    {
+        if (string.IsNullOrEmpty(searchString))
+        {
+            // Se a string de pesquisa estiver vazia, redireciona para a lista de jogos
+            return RedirectToAction("Index");
+        }
+
+        // Procura jogos que correspondam ao termo de pesquisa (insensível a maiúsculas e minúsculas)
+        var users = _lista.Where(c => c.ds_email!.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (users.Count == 0)
+        {
+            // Caso nenhum jogo for encontrado
+            TempData["msg"] = "Nenhum Usuário Encontrado(a)!!";
+            return RedirectToAction("Index");
+        }
+
+        // Se os jogos forem encontrados, envie-os para a visualização de índice
+        return View("Index", users);
+    }
 
     // GET: UserController/Details/5
     [HttpGet]
@@ -60,10 +84,17 @@ public class UserController : Controller
 	{
 		//Atualizar o user na lista
 		var index = _lista.FindIndex(c => c.id_user == user.id_user);
-		//Substitui o objeto na posição do user antigo
-		_lista[index] = user;
-		//Mensagem de sucesso
-		TempData["msg"] = "Usuário atualizado com sucesso!";
+        //Substitui o objeto na posição do user antigo
+        if (index == -1)
+        {
+            _lista[index].dt_updated_at = DateTime.Now;
+
+            _lista[index].ds_email = user.ds_email;
+            _lista[index].password = user.password;
+            _lista[index].dt_finished_at = user.dt_finished_at;
+        }
+        //Mensagem de sucesso
+        TempData["msg"] = "Usuário atualizado com sucesso!";
 		//Redirect para a listagem/editar
 		return RedirectToAction("editar");
 	}

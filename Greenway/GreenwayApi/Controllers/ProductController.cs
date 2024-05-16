@@ -60,10 +60,20 @@ public class ProductController : Controller
 	{
 		//Atualizar o product na lista
 		var index = _lista.FindIndex(c => c.id_product == product.id_product);
-		//Substitui o objeto na posição do product antigo
-		_lista[index] = product;
-		//Mensagem de sucesso
-		TempData["msg"] = "Produto atualizado com sucesso!";
+        //Substitui o objeto na posição do product antigo
+        if (index == -1)
+        {
+            _lista[index].dt_updated_at = DateTime.Now;
+
+            _lista[index].ds_name = product.ds_name;
+            _lista[index].tx_description = product.tx_description;
+            _lista[index].vl_sale_price = product.vl_sale_price;
+            _lista[index].vl_cost_price = product.vl_cost_price;
+            _lista[index].nr_weight = product.nr_weight;
+            _lista[index].dt_finished_at = product.dt_finished_at;
+        }
+        //Mensagem de sucesso
+        TempData["msg"] = "Produto atualizado com sucesso!";
 		//Redirect para a listagem/editar
 		return RedirectToAction("editar");
 	}
