@@ -1,9 +1,5 @@
 ﻿/* Estilos para o formulário de cadastro de jogos */
-<<<<<<< HEAD
 .section-cadastrar-greenway, .section-editar-greenway {
-=======
-.section-cadastrar-game, .section-editar-game {
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -11,42 +7,26 @@
     align-items: center;
 }
 
-<<<<<<< HEAD
 .form-content-greenway {
-=======
-.form-content-game {
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-<<<<<<< HEAD
     background-color: #012717;
     border-radius: 30px;
     padding: 20px;
 }
 
 .form-box-greenway {
-=======
-    background-color: #5c0a6d;
-    border-radius: 69px;
-    padding: 20px;
-}
-.form-box-game {
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-<<<<<<< HEAD
 .form-label-greenway {
-=======
-.form-label-game {
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 100%;
     display: block;
     margin-bottom: 5px;
@@ -54,11 +34,7 @@
     color: #FFFFFF;
 }
 
-<<<<<<< HEAD
 .form-items-greenway{
-=======
-.form-items-game, .form-select-game {
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     width: 100%;
     background-color: #333;
     padding: 10px 20px;
@@ -68,23 +44,9 @@
     color: #cdcdcd;
 }
 
-<<<<<<< HEAD
 .form-items-greenway:focus {
     outline: none;
     border: 4px solid #09b809;
-=======
-.form-select-game {
-    font-size: 16px; /* Add a font size to match the input fields */
-}
-
-.form-select-game option {
-    padding: 10px; /* Add padding to the options */
-}
-
-.form-items-game:focus, .form-select-game:focus {
-    outline: none;
-    border: 4px solid #9c15b8;
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 }
 
 .form-content-button {
@@ -105,17 +67,12 @@
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-<<<<<<< HEAD
     background-color: #006400;
-=======
-    background-color: #9c15b8;
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     border-radius: 50px;
     color: #fff;
     transition: all 0.6s;
 }
 
-<<<<<<< HEAD
 .form-content-greenway .button-input:hover {
     background-color: #0fcc0f;
 }
@@ -138,8 +95,4 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-=======
-.form-content-game .button-input:hover {
-    background-color: #333;
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
 }

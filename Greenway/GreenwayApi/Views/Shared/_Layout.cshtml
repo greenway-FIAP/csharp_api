@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - Greenway</title>
     <link rel="shortcut icon" href="~/img/Logo_Greenway.png" type="image/x-icon" />
     <link href="~/css/reset.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/reset.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/home.css" asp-append-version="true" />
@@ -24,7 +23,6 @@
         <nav class="menu-nav">
             <div class="menu-nav-content">
                 <a class="menu-logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Greenway_Text.png" alt="Logo Greenway" /></a>
-<<<<<<< Updated upstream
                 <button class="menu-hamburguer" onclick="toggleMenu()"><img src="~/img/ico-hamburguer.svg" alt=""></button>
                 <div class="menu-items-content">
                     <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
@@ -54,64 +52,15 @@
                         </div>
                     </div>
                     <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-=======
-                <button class="menu-hamburguer" onclick="toggleMenu()"><img src="~/img/icons/ico-hamburguer.svg" alt="Ícone de Hamburguer" class="icon-hamburguer"></button>
-                <div class="menu-items-content">
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="menu-items-link">Inicio</a>
-
-                    <div class="dropdown">
-                        <a class="menu-items-link">Company<span class="dropdown-icon"></span></a>
-                        <div class="dropdown-content">
-                            <a asp-area="" asp-controller="Company" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/icons/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
-                            <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="Company" asp-action="Index" class="menu-items-link"><img src="~/img/icons/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a class="menu-items-link">User<span class="dropdown-icon"></span></a>
-                        <div class="dropdown-content">
-                            <a asp-area="" asp-controller="User" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/icons/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
-                            <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="User" asp-action="Index" class="menu-items-link"><img src="~/img/icons/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a class="menu-items-link">Product<span class="dropdown-icon"></span></a>
-                        <div class="dropdown-content">
-                            <a asp-area="" asp-controller="Product" asp-action="Cadastrar" class="menu-items-link"><img src="~/img/icons/ico-cadastrar.svg" alt="Ícone de Cadastrar" class="icon-item-dropdown">Cadastrar</a>
-                            <div class="dropdown-content-divisor"></div>
-                            <a asp-area="" asp-controller="Product" asp-action="Index" class="menu-items-link"><img src="~/img/icons/ico-listar.svg" alt="Ícone de Listar" class="icon-item-dropdown">Listar</a>
-                        </div>
-                    </div>
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="menu-items-link">Privacidade</a>
-                    <div class="container-search">
-                        <form method="get" asp-controller="#" asp-action="PesquisaNome" class="header-form-search">
-                            <input type="search" class="input-search" placeholder="Pesquisar..." aria-label="Search" name="searchString">
-                            <button type="submit" class="button-search-ico"><img class="search-ico" src="~/img/icons/ico-search.svg" alt="Icone de Pesquisa" /></button>
-                        </form>
-                    </div>
->>>>>>> Stashed changes
                 </div>
             </div>
         </nav>
     </header>
-<<<<<<< HEAD
-
-=======
-<<<<<<< Updated upstream
-    <!--class="pb-3"-->
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
-    <main role="main" class="main-content">
-        @RenderBody()
-    </main>
-
-=======
 
     <main role="main" class="main-content">
         @RenderBody()
     </main>
 
->>>>>>> Stashed changes
     <footer class="footer-content">
         <ul class="footer-container">
             <li><p>&copy; 2024 · Technos</p></li>
@@ -122,17 +71,9 @@
         </ul>
     </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
-<<<<<<< HEAD
     <script src="~/js/responsive.js" asp-append-version="true"></script>
     <script src="~/js/confirm-page.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/b83066dc1c.js" crossorigin="anonymous"></script>
-=======
-<<<<<<< Updated upstream
-    <script src="~/js/hamburguer.js" asp-append-version="true"></script>
-=======
-    <script src="~/js/responsive.js" asp-append-version="true"></script>
->>>>>>> Stashed changes
->>>>>>> 2bbe6a72c04bbdca04c7ff3a7dd894b02b25d30a
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
