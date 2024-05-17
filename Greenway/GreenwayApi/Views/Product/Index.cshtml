@@ -17,14 +17,14 @@
             <a asp-action="Index" class="button-back-list">Voltar a Lista de Empresas</a>
         </div>
 
-        <div class="content-table">
+        <div class="content-table-product">
             <table class="table">
                 <tr class="table-head">
                     <th class="table-title">Nome</th>
                     <th class="table-title">Descrição</th>
-                    <th class="table-title">Valor da Receita Anual</th>
-                    <th class="table-title">Número de Funcionários</th>
-                    <th class="table-title">CNPJ</th>
+                    <th class="table-title">Preço de Custo</th>
+                    <th class="table-title">Preço de Venda</th>
+                    <th class="table-title">Peso</th>
                     <th class="table-title">Data de Criação</th>
                     <th class="table-title">Data de Atualização</th>
                 </tr>
@@ -33,9 +33,9 @@
                     <tr>
                         <td class="table-content">@c.ds_name</td>
                         <td class="table-content">@c.tx_description</td>
-                        <td class="table-content">R$ @c.vl_sale_price?.ToString("N2")</td>
                         <td class="table-content">R$ @c.vl_cost_price?.ToString("N2")</td>
-                        <td class="table-content">@c.nr_weight?.ToString("N2")</td>
+                        <td class="table-content">R$ @c.vl_sale_price?.ToString("N2")</td>
+                        <td class="table-content">@c.nr_weight?.ToString("N2")kg</td>
                         <td class="table-content">@c.dt_created_at</td>
                         <td class="table-content">@c.dt_updated_at</td>
                         <td class="table-content">

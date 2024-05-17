@@ -3,10 +3,10 @@
 <input type="hidden" asp-for="id_user" />
 <div class="form-box-greenway">
     <label asp-for="ds_email" class="form-label-greenway">E-mail</label>
-    <input asp-for="ds_email" class="form-items-greenway" type="email" placeholder="Digite o e-mail..." />
+    <input asp-for="ds_email" class="form-items-greenway" type="email" placeholder="Digite o e-mail..." required/>
 </div>
-<div class="form-box-greenway">
+<div class="form-box-greenway pswd">
     <label asp-for="password" class="form-label-greenway">Senha</label>
-    <input asp-for="password" class="form-items-greenway" id="pswd" type="password" placeholder="Digite a senha..." />
+    <input asp-for="password" class="form-items-greenway" id="pswd" type="password" placeholder="Digite a senha..." required/>
     <span id="eyeBtn"></span>
 </div>
