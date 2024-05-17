@@ -50,6 +50,12 @@ public class UserController : Controller
 	[HttpPost]
 	public IActionResult Cadastrar(User user)
 	{
+		if (_lista.Any(c => c.ds_email == user.ds_email))
+		{
+			TempData["msg"] = "E-mail já cadastrado!";
+			return View();
+		}
+
 		//Setar o código do user
 		user.id_user = ++_id;
 		//Adicionar o user na lista
@@ -85,7 +91,7 @@ public class UserController : Controller
 		//Atualizar o user na lista
 		var index = _lista.FindIndex(c => c.id_user == user.id_user);
         //Substitui o objeto na posição do user antigo
-        if (index == -1)
+        if (index != -1)
         {
             _lista[index].dt_updated_at = DateTime.Now;
 
@@ -93,6 +99,7 @@ public class UserController : Controller
             _lista[index].password = user.password;
             _lista[index].dt_finished_at = user.dt_finished_at;
         }
+
         //Mensagem de sucesso
         TempData["msg"] = "Usuário atualizado com sucesso!";
 		//Redirect para a listagem/editar

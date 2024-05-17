@@ -49,15 +49,22 @@ public class CompanyController : Controller
 	[HttpPost]
 	public IActionResult Cadastrar(Company company)
 	{
-		//Setar o código do greenway
-		company.id_company = ++_id;
-		//Adicionar o greenway na lista
-		_lista.Add(company);
-		//Mandar uma mensagem de sucesso para a view
-		TempData["msg"] = "Empresa cadastrada com sucesso!";
-		//Redireciona para o método Cadastrar
-		return RedirectToAction("Cadastrar");
-	}
+        // Verificar se o CNPJ já está cadastrado
+        if (_lista.Any(c => c.nr_cnpj == company.nr_cnpj))
+        {
+            TempData["msg"] = "CNPJ já cadastrado!";
+            return View();
+        }
+
+        // Setar o código da empresa
+        company.id_company = ++_id;
+        // Adicionar a empresa na lista
+        _lista.Add(company);
+        // Mandar uma mensagem de sucesso para a view
+        TempData["msg"] = "Empresa cadastrada com sucesso!";
+        // Redireciona para o método Cadastrar
+        return RedirectToAction("Cadastrar");
+    }
 
 	// Read
 	public IActionResult Index()

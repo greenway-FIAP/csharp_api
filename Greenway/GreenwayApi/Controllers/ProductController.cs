@@ -26,6 +26,12 @@ public class ProductController : Controller
 	[HttpPost]
 	public IActionResult Cadastrar(Product product)
 	{
+		if (_lista.Any(c => c.ds_name == product.ds_name))
+		{
+			TempData["msg"] = "Produto já cadastrado!";
+			return View();
+		}
+
 		//Setar o código do product
 		product.id_product = ++_id;
 		//Adicionar o product na lista
@@ -61,7 +67,7 @@ public class ProductController : Controller
 		//Atualizar o product na lista
 		var index = _lista.FindIndex(c => c.id_product == product.id_product);
         //Substitui o objeto na posição do product antigo
-        if (index == -1)
+        if (index != -1)
         {
             _lista[index].dt_updated_at = DateTime.Now;
 
