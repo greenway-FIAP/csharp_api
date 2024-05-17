@@ -9,6 +9,7 @@
 
 .section-container-table {
     height: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +32,7 @@
     padding: 8px 12px;
     border-radius: 4px 0 0 4px;
     font-size: 16px;
-    width: 350px;
+    width: 24vh;
 }
 
 /* Estilo para o botão de pesquisa */
@@ -68,11 +69,20 @@
 
 /* TABELA DE INFORMAÇÕES */
 
-.content-table {
-    width: 100%;
-    height: 40vh;
+.content-table-company, .content-table-user, .content-table-product {
+    width: 80vw;
+    height: auto;
+    max-height: 40vh;
     overflow: auto;
     border-radius: 20px;
+}
+
+/*.content-table-user {
+    width: 47vw;
+}*/
+
+.content-table-product{
+
 }
 
 .content-table::-webkit-scrollbar {
@@ -98,7 +108,6 @@ table, tbody {
 }
 
 tr {
-    display: table-header-group;
     background-color: #2b2828;
     color: #b4a5a5;
 }
@@ -220,43 +229,10 @@ tr {
 }
 
 
-/* Cadastro de Usuário */
-.form-box-greenway #eyeBtn {
-    background: rgba(112, 112, 112, 0.116);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 56%;
-    right: 34%;
-    width: 34px;
-    height: 34px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.form-box-greenway #eyeBtn::before {
-    content: '\f06e';
-    color: #ffffff;
-    font-family: fontAwesome;
-}
-
-.form-box-greenway #eyeBtn.hdPwdLgn::before {
-    content: '\f070';
-    color: rgb(255, 0, 0);
-    font-family: fontAwesome;
-}
-
-
 @media (max-width: 1085px) {
-    .content-table {
-        width: 95%;
-    }
 
     .button-container {
-        display: flex;
         flex-direction: column;
-        gap: 10px;
     }
 
     .button-link-editar,
@@ -264,5 +240,18 @@ tr {
         width: 100%;
         padding: 8px;
         text-align: center;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .content-table-user {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 360px) {
+    .content-table-user {
+        width: 60vw;
     }
 }

@@ -135,7 +135,11 @@
 
     /* Formulários de Cadastro */
     .section-cadastrar-greenway, .section-editar-greenway {
-        width: 100%;
+        width: 100% !important;
+    }
+
+    .form-content-greenway {
+        width: 80% !important;
     }
 
     .content-table {
@@ -152,7 +156,7 @@
     }
 
     .button-input {
-        width: 40vw;
+        width: 40vw !important;
     }
 
     .content-alert-sucess {
