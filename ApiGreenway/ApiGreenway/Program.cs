@@ -42,7 +42,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Api da Plataforma Greenway de Sustentabilidade",
-        Version = "v1",
+        Version = "v1.0.0",
         Description = "Api da Plataforma Greenway de Sustentabilidade",
         Contact = new OpenApiContact
         {
