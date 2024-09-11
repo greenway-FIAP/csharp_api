@@ -11,7 +11,6 @@ public class MeasurementProcessStep
     public int id_measurement_process_step { get; set; }
 
     public required double nr_result { get; set; }
-
     public required DateTime dt_created_at { get; set; }
     public DateTime dt_updated_at { get; set; }
     public DateTime dt_finished_at { get; set; }

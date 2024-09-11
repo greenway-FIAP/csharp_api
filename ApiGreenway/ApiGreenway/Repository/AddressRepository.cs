@@ -1,32 +1,65 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class AddressRepository : IAddressRepository
 {
-    public Task<Address> AddAddress(Address Address)
+    private readonly dbContext _dbContext;
+
+    public AddressRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteAddress(int AddressId)
+    public async Task<Address> AddAddress(Address address)
     {
-        throw new NotImplementedException();
+        var addressBd = await _dbContext.Addresses.AddAsync(address);
+        await _dbContext.SaveChangesAsync();
+        return addressBd.Entity;
     }
 
-    public Task<Address> GetAddressById(int AddressId)
+    public async Task<IEnumerable<Address>> GetAddresses()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Addresses.ToListAsync();
     }
 
-    public Task<IEnumerable<Address>> GetAddresses()
+    public async Task<Address> GetAddressById(int addressId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
     }
 
-    public Task<Address> UpdateAddress(Address Address)
+    public async Task<Address> UpdateAddress(Address address)
     {
-        throw new NotImplementedException();
+        var existingAddress = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == address.id_address);
+        if (existingAddress == null)
+        {
+            return null; // Retorna null se o Address não for encontrado
+        }
+
+        // Atualiza o nome da rua
+        existingAddress.ds_street = address.ds_street;
+        existingAddress.ds_zip_code = address.ds_zip_code;
+        existingAddress.ds_number = address.ds_number;
+        existingAddress.ds_uf = address.ds_uf;
+        existingAddress.ds_neighborhood = address.ds_neighborhood;
+        existingAddress.ds_city = address.ds_city;
+
+        address.dt_updated_at = DateTime.Now;
+
+        await _dbContext.SaveChangesAsync();
+        return existingAddress;
+    }
+
+    public async void DeleteAddress(int addressId)
+    {
+        var result = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
+        if (result != null)
+        {
+            _dbContext.Addresses.Remove(result);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
