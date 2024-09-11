@@ -14,51 +14,56 @@ public class AddressRepository : IAddressRepository
         this._dbContext = _dbContext;
     }
 
+    public async Task<IEnumerable<Address>> GetAddresses()
+    {
+        return await _dbContext.Addresses.Where(a => a.dt_finished_at == null).ToListAsync();
+    }
+
+    public async Task<Address> GetAddressById(int addressId)
+    {
+        return await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId && d.dt_finished_at == null);
+    }
+
     public async Task<Address> AddAddress(Address address)
     {
+        address.dt_updated_at = null; 
+        address.dt_finished_at = null; 
+
         var addressBd = await _dbContext.Addresses.AddAsync(address);
         await _dbContext.SaveChangesAsync();
         return addressBd.Entity;
     }
 
-    public async Task<IEnumerable<Address>> GetAddresses()
-    {
-        return await _dbContext.Addresses.ToListAsync();
-    }
-
-    public async Task<Address> GetAddressById(int addressId)
-    {
-        return await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
-    }
-
     public async Task<Address> UpdateAddress(Address address)
     {
-        var existingAddress = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == address.id_address);
-        if (existingAddress == null)
+        var addressDb = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == address.id_address);
+        if (addressDb == null)
         {
             return null; // Retorna null se o Address não for encontrado
         }
 
         // Atualiza o nome da rua
-        existingAddress.ds_street = address.ds_street;
-        existingAddress.ds_zip_code = address.ds_zip_code;
-        existingAddress.ds_number = address.ds_number;
-        existingAddress.ds_uf = address.ds_uf;
-        existingAddress.ds_neighborhood = address.ds_neighborhood;
-        existingAddress.ds_city = address.ds_city;
+        addressDb.ds_street = address.ds_street;
+        addressDb.ds_zip_code = address.ds_zip_code;
+        addressDb.ds_number = address.ds_number;
+        addressDb.ds_uf = address.ds_uf;
+        addressDb.ds_neighborhood = address.ds_neighborhood;
+        addressDb.ds_city = address.ds_city;
 
-        address.dt_updated_at = DateTime.Now;
+        address.dt_updated_at = DateTime.UtcNow; // Atualiza a data de atualização
 
         await _dbContext.SaveChangesAsync();
-        return existingAddress;
+        return addressDb;
     }
 
     public async void DeleteAddress(int addressId)
     {
-        var result = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
-        if (result != null)
+        var addressDb = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
+        if (addressDb != null)
         {
-            _dbContext.Addresses.Remove(result);
+            addressDb.dt_finished_at = DateTime.UtcNow;
+
+            // Atualiza o status do Address para finalizado
             await _dbContext.SaveChangesAsync();
         }
     }

@@ -8,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<dbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection"))
+           .LogTo(Console.WriteLine, LogLevel.Information)
+);
 
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IBadgeRepository, BadgeRepository>();

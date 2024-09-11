@@ -16,9 +16,9 @@ public class Address
     public required string ds_uf { get; set; }
     public required string ds_neighborhood { get; set; }
     public required string ds_city { get; set; }
-    public required DateTime dt_created_at { get; set; } = DateTime.Now; 
-    public DateTime dt_updated_at { get; set; }
-    public DateTime dt_finished_at { get; set; }
+    public DateTime dt_created_at { get; set; } = DateTime.UtcNow;
+    public DateTime? dt_updated_at { get; set; }
+    public DateTime? dt_finished_at { get; set; }
 
     // Relationships
     public required int id_company { get; set; }
