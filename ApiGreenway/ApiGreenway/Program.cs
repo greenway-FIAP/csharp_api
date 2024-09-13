@@ -50,7 +50,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Api da Plataforma Greenway de Sustentabilidade",
         Version = "v1.0.0",
-        Description = "Api da Plataforma Greenway de Sustentabilidade",
+        Description = "Esta api tem como funcionalidade ser um BackEnd para que seja utilizado por outras aplicações web e etc.",
         Contact = new OpenApiContact
         {
             Name = "Greenway",
