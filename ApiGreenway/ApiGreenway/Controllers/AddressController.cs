@@ -112,7 +112,7 @@ public class AddressController : ControllerBase
 
             _addressRepository.DeleteAddress(addressId);
 
-            return Ok("Endereço, foi deletado com sucesso!");
+            return Ok("Endereço, foi deletado(a) com sucesso!");
         }
         catch (Exception)
         {
