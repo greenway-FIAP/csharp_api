@@ -31,15 +31,15 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpGet("{AddressId:int}")]
-    public async Task<ActionResult<Address>> GetAddressById(int AddressId)
+    [HttpGet("{addressId:int}")]
+    public async Task<ActionResult<Address>> GetAddressById(int addressId)
     {
         try
         {
-            var address = await _addressRepository.GetAddressById(AddressId);
+            var address = await _addressRepository.GetAddressById(addressId);
             if (address == null)
             {
-                return NotFound();
+                return NotFound($"Endereço com o ID: {addressId}, não foi encontrado(a)!");
             }
 
             return Ok(address);
@@ -63,7 +63,7 @@ public class AddressController : ControllerBase
             var createdAddress = await _addressRepository.AddAddress(address);
             return CreatedAtAction(nameof(GetAddressById), new
             {
-                AddressId = createdAddress.id_address
+                addressId = createdAddress.id_address
             }, createdAddress);
         }
         catch (Exception)
@@ -72,21 +72,22 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpPut("{AddressId:int}")]
-    public async Task<ActionResult<Address>> UpdateAddress(int AddressId, [FromBody] Address address)
+    [HttpPut("{addressId:int}")]
+    public async Task<ActionResult<Address>> UpdateAddress(int addressId, [FromBody] Address address)
     {
         try
         {
             if (address == null)
             {
-                return BadRequest("Alguns daos estão inválidos, verifique!!");
+                return BadRequest("Alguns dados estão inválidos, verifique!!");
             }
 
-            address.id_address = AddressId;
+            address.id_address = addressId;
             var updatedAddress = await _addressRepository.UpdateAddress(address);
+
             if(updatedAddress == null)
             {
-                return NotFound($"Endereço com o ID: {AddressId}, não foi encontrado!");
+                return NotFound($"Endereço com o ID: {addressId}, não foi encontrado(a)!");
             }
 
             return Ok(updatedAddress);
@@ -97,19 +98,21 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpDelete("{AddressId:int}")]
-    public async Task<ActionResult<Address>> DeleteAddress(int AddressId)
+    [HttpDelete("{addressId:int}")]
+    public async Task<ActionResult<Address>> DeleteAddress(int addressId)
     {
         try
         {
-            var deletedAddress = await _addressRepository.GetAddressById(AddressId);
+            var deletedAddress = await _addressRepository.GetAddressById(addressId);
+
             if (deletedAddress == null)
             {
-                return NotFound($"Endereço com o ID: {AddressId}, não foi encontrado!");
+                return NotFound($"Endereço com o ID: {addressId}, não foi encontrado(a)!");
             }
-            _addressRepository.DeleteAddress(AddressId);
 
-            return Ok(deletedAddress);
+            _addressRepository.DeleteAddress(addressId);
+
+            return Ok("Endereço, foi deletado com sucesso!");
         }
         catch (Exception)
         {
