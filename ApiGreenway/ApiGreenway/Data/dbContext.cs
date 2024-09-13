@@ -14,7 +14,7 @@ namespace ApiGreenway.Data
         public DbSet<CompanyRepresentative> CompanyRepresentatives { get; set; }
         public DbSet<ImprovementMeasurement> ImprovementMeasurements { get; set; }
         public DbSet<MeasurementProcessStep> MeasurementProcessSteps { get; set; }
-        public DbSet<Measurement> Measuraments  { get; set; }
+        public DbSet<Measurement> Measurements  { get; set; }
         public DbSet<MeasurementType> MeasurementTypes { get; set; }
         public DbSet<Process> Processes { get; set; }
         public DbSet<ProcessBadge> ProcessBadges { get; set; }
