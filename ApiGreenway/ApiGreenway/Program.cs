@@ -1,14 +1,21 @@
 using ApiGreenway.Data;
 using ApiGreenway.Repository;
 using ApiGreenway.Repository.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
+using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<dbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection"))
+           .LogTo(Console.WriteLine, LogLevel.Information)
+);
 
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IBadgeRepository, BadgeRepository>();
@@ -43,7 +50,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Api da Plataforma Greenway de Sustentabilidade",
         Version = "v1.0.0",
-        Description = "Api da Plataforma Greenway de Sustentabilidade",
+        Description = "Esta api tem como funcionalidade ser um BackEnd para que seja utilizado por outras aplicações web e etc.",
         Contact = new OpenApiContact
         {
             Name = "Greenway",
@@ -51,6 +58,10 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://www.greenway.com.br")
         }
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();

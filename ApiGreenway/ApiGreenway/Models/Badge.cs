@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using ApiGreenway.Enums;
 
 namespace ApiGreenway.Models;
@@ -17,7 +18,17 @@ public class Badge
     public required StatusProcess st_badge { get; set; }
     public required string url_image { get; set; }
 
+    // Não existe no banco relacionnal, verificar se coloco mesmo.
+    [JsonIgnore]
+    public DateTimeOffset dt_created_at { get; set; } = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+    [JsonIgnore]
+    public DateTimeOffset? dt_updated_at { get; set; }
+
+    [JsonIgnore]
+    public DateTimeOffset? dt_finished_at { get; set; }
+
     // Relationships
-    public required int id_badge_level { get; set; }
-    public required int id_sustainable_goal { get; set; }
+    public int? id_badge_level { get; set; }
+    public int? id_sustainable_goal { get; set; }
 }

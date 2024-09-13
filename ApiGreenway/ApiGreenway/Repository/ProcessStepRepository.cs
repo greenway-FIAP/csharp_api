@@ -1,32 +1,59 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class ProcessStepRepository : IProcessStepRepository
 {
-    public Task<ProcessStep> AddProcessStep(ProcessStep processStep)
+    private readonly dbContext _dbContext;
+
+    public ProcessStepRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteProcessStep(int ProcessStepId)
+    public async Task<IEnumerable<ProcessStep>> GetProcessSteps()
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProcessSteps.Where(p => p.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<ProcessStep> GetProcessStepById(int ProcessStepId)
+    public async Task<ProcessStep> GetProcessStepById(int ProcessStepId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProcessSteps.FirstOrDefaultAsync(p => p.id_process_step == ProcessStepId && p.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<ProcessStep>> GetProcessSteps()
+    public async Task<ProcessStep> AddProcessStep(ProcessStep processStep)
     {
-        throw new NotImplementedException();
+        var processStepDb = await _dbContext.ProcessSteps.AddAsync(processStep);
+        await _dbContext.SaveChangesAsync();
+        return processStepDb.Entity;
     }
 
-    public Task<ProcessStep> UpdateProcessStep(ProcessStep processStep)
+    public async Task<ProcessStep> UpdateProcessStep(ProcessStep processStep)
     {
-        throw new NotImplementedException();
+        var processStepDb = await _dbContext.ProcessSteps.FirstOrDefaultAsync(p => p.id_process_step == processStep.id_process_step);
+        if (processStepDb == null)
+        {
+            return null; // Retorna null se o ProcessStep não for encontrado
+        }
+
+        processStepDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+        processStepDb.id_step = processStep.id_step;
+        processStepDb.id_process = processStep.id_process;
+
+        await _dbContext.SaveChangesAsync();
+        return processStepDb;
+    }
+
+    public async void DeleteProcessStep(int ProcessStepId)
+    {
+        var processStepDb = await _dbContext.ProcessSteps.FirstOrDefaultAsync(p => p.id_process_step == ProcessStepId);
+        if (processStepDb != null)
+        {
+            processStepDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

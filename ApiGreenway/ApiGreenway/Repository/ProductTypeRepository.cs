@@ -1,32 +1,59 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class ProductTypeRepository : IProductTypeRepository
 {
-    public Task<ProductType> AddProductType(ProductType productType)
+    private readonly dbContext _dbContext;
+
+    public ProductTypeRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteProductType(int ProductTypeId)
+    public async Task<IEnumerable<ProductType>> GetProductTypes()
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProductTypes.Where(p => p.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<ProductType> GetProductTypeById(int ProductTypeId)
+    public async Task<ProductType> GetProductTypeById(int ProductTypeId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProductTypes.FirstOrDefaultAsync(p => p.id_product_type == ProductTypeId && p.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<ProductType>> GetProductTypes()
+    public async Task<ProductType> AddProductType(ProductType productType)
     {
-        throw new NotImplementedException();
+        var productTypeDb = await _dbContext.ProductTypes.AddAsync(productType);
+        await _dbContext.SaveChangesAsync();
+        return productTypeDb.Entity;
     }
 
-    public Task<ProductType> UpdateProductType(ProductType productType)
+    public async Task<ProductType> UpdateProductType(ProductType productType)
     {
-        throw new NotImplementedException();
+        var productTypeDb = await _dbContext.ProductTypes.FirstOrDefaultAsync(p => p.id_product_type == productType.id_product_type);
+        if (productTypeDb == null)
+        {
+            return null; // Retorna null se o ProductType não for encontrado
+        }
+
+        productTypeDb.ds_name = productType.ds_name;
+        productTypeDb.tx_description = productType.tx_description;
+        productTypeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+        await _dbContext.SaveChangesAsync();
+        return productTypeDb;
+    }
+
+    public async void DeleteProductType(int ProductTypeId)
+    {
+        var productTypeDb = await _dbContext.ProductTypes.FirstOrDefaultAsync(p => p.id_product_type == ProductTypeId);
+        if (productTypeDb != null)
+        {
+            productTypeDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
