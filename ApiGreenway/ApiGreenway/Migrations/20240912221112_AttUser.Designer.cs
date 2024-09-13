@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20240911194331_all-tables")]
-    partial class alltables
+    [Migration("20240912221112_AttUser")]
+    partial class AttUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,20 +51,22 @@ namespace ApiGreenway.Migrations
 
                     b.Property<string>("ds_uf")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(2)
+                        .HasColumnType("NVARCHAR2(2)");
 
                     b.Property<string>("ds_zip_code")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(8)
+                        .HasColumnType("NVARCHAR2(8)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime?>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime?>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_company")
                         .HasColumnType("NUMBER(10)");
@@ -89,6 +91,15 @@ namespace ApiGreenway.Migrations
                     b.Property<string>("ds_name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_badge_level")
                         .HasColumnType("NUMBER(10)");
@@ -124,14 +135,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("tx_description")
                         .IsRequired()
@@ -154,14 +165,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_address")
                         .HasColumnType("NUMBER(10)");
@@ -203,14 +214,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_company")
                         .HasColumnType("NUMBER(10)");
@@ -235,14 +246,14 @@ namespace ApiGreenway.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_improvement_measurement"));
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_sustainable_improvement_actions")
                         .HasColumnType("NUMBER(10)");
@@ -264,14 +275,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_improvement_measurement")
                         .HasColumnType("NUMBER(10)");
@@ -299,14 +310,14 @@ namespace ApiGreenway.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_measurement_process_step"));
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_measurement")
                         .HasColumnType("NUMBER(10)");
@@ -333,14 +344,14 @@ namespace ApiGreenway.Migrations
                     b.Property<int>("ds_name")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("tx_description")
                         .IsRequired()
@@ -363,22 +374,22 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("dt_end")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(10)");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("dt_start")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(10)");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_company")
                         .HasColumnType("NUMBER(10)");
@@ -393,7 +404,6 @@ namespace ApiGreenway.Migrations
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_comments")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("tx_description")
@@ -413,18 +423,18 @@ namespace ApiGreenway.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_process_badge"));
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("dt_expiration_date")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(10)");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_badge")
                         .HasColumnType("NUMBER(10)");
@@ -449,14 +459,14 @@ namespace ApiGreenway.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_process_resource"));
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_process")
                         .HasColumnType("NUMBER(10)");
@@ -477,14 +487,14 @@ namespace ApiGreenway.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_process_step"));
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_process")
                         .HasColumnType("NUMBER(10)");
@@ -509,14 +519,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_product_type")
                         .HasColumnType("NUMBER(10)");
@@ -551,14 +561,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("tx_description")
                         .IsRequired()
@@ -585,14 +595,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_resource_type")
                         .HasColumnType("NUMBER(10)");
@@ -624,14 +634,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("tx_description")
                         .IsRequired()
@@ -654,14 +664,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("tx_description")
                         .IsRequired()
@@ -684,22 +694,22 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("dt_end")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(10)");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("dt_start")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(10)");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<double>("nr_estimated_time")
                         .HasColumnType("BINARY_DOUBLE");
@@ -728,14 +738,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_badge")
                         .HasColumnType("NUMBER(10)");
@@ -764,14 +774,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_sustainable_goal")
                         .HasColumnType("NUMBER(10)");
@@ -807,19 +817,19 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_company_representative")
+                    b.Property<int?>("id_company_representative")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_user_type")
+                    b.Property<int?>("id_user_type")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_user");
@@ -839,14 +849,14 @@ namespace ApiGreenway.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<DateTime>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset>("dt_created_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_finished_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<DateTime>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.Property<DateTimeOffset?>("dt_updated_at")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.HasKey("id_user_type");
 

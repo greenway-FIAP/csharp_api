@@ -3,6 +3,7 @@ using System;
 using ApiGreenway.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    partial class dbContextModelSnapshot : ModelSnapshot
+    [Migration("20240912040837_all-tables")]
+    partial class alltables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,15 +91,6 @@ namespace ApiGreenway.Migrations
                     b.Property<string>("ds_name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<DateTimeOffset>("dt_created_at")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
-
-                    b.Property<DateTimeOffset?>("dt_finished_at")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
-
-                    b.Property<DateTimeOffset?>("dt_updated_at")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<int>("id_badge_level")
                         .HasColumnType("NUMBER(10)");
@@ -823,10 +817,10 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int?>("id_company_representative")
+                    b.Property<int>("id_company_representative")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int?>("id_user_type")
+                    b.Property<int>("id_user_type")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_user");
