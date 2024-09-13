@@ -1,32 +1,62 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class MeasurementRepository : IMeasurementRepository
 {
-    public Task<Measurement> AddMeasurement(Measurement Measurement)
+    private readonly dbContext _dbContext;
+
+    public MeasurementRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteMeasurement(int MeasurementId)
+    public async Task<IEnumerable<Measurement>> GetMeasurements()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Measurements.Where(m => m.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<Measurement> GetMeasurementById(int MeasurementId)
+    public async Task<Measurement> GetMeasurementById(int MeasurementId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Measurements.FirstOrDefaultAsync(m => m.id_measurement == MeasurementId && m.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<Measurement>> GetMeasurements()
+    public async Task<Measurement> AddMeasurement(Measurement Measurement)
     {
-        throw new NotImplementedException();
+        var MeasurementDb = await _dbContext.Measurements.AddAsync(Measurement);
+        await _dbContext.SaveChangesAsync();
+        return MeasurementDb.Entity;
     }
 
-    public Task<Measurement> UpdateMeasurement(Measurement Measurement)
+    public async Task<Measurement> UpdateMeasurement(Measurement Measurement)
     {
-        throw new NotImplementedException();
+        var MeasurementDb = await _dbContext.Measurements.FirstOrDefaultAsync(m => m.id_measurement == Measurement.id_measurement);
+        if (MeasurementDb == null)
+        {
+            return null; // Retorna null se o Measurement não for encontrado
+        }
+
+        MeasurementDb.ds_name = Measurement.ds_name;
+        MeasurementDb.tx_description = Measurement.tx_description;
+        MeasurementDb.id_measurement_type = Measurement.id_measurement_type;
+        MeasurementDb.id_improvement_measurement = Measurement.id_improvement_measurement;
+        MeasurementDb.id_sustainable_goal = Measurement.id_sustainable_goal;
+        MeasurementDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+        await _dbContext.SaveChangesAsync();
+        return MeasurementDb;
+    }
+
+    public async void DeleteMeasurement(int MeasurementId)
+    {
+        var MeasurementDb = await _dbContext.Measurements.FirstOrDefaultAsync(m => m.id_measurement == MeasurementId);
+        if (MeasurementDb != null)
+        {
+            MeasurementDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

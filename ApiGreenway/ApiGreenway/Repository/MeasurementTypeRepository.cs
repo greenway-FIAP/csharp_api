@@ -1,32 +1,59 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class MeasurementTypeRepository : IMeasurementTypeRepository
 {
-    public Task<MeasurementType> AddMeasurementType(MeasurementType measurementType)
+    private readonly dbContext _dbContext;
+
+    public MeasurementTypeRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteMeasurementType(int MeasurementTypeId)
+    public async Task<IEnumerable<MeasurementType>> GetMeasurementTypes()
     {
-        throw new NotImplementedException();
+        return await _dbContext.MeasurementTypes.Where(m => m.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<MeasurementType> GetMeasurementTypeById(int MeasurementTypeId)
+    public async Task<MeasurementType> GetMeasurementTypeById(int MeasurementTypeId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.MeasurementTypes.FirstOrDefaultAsync(m => m.id_measurement_type == MeasurementTypeId && m.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<MeasurementType>> GetMeasurementTypes()
+    public async Task<MeasurementType> AddMeasurementType(MeasurementType measurementType)
     {
-        throw new NotImplementedException();
+        var measurementTypeDb = await _dbContext.MeasurementTypes.AddAsync(measurementType);
+        await _dbContext.SaveChangesAsync();
+        return measurementTypeDb.Entity;
     }
 
-    public Task<MeasurementType> UpdateMeasurementType(MeasurementType measurementType)
+    public async Task<MeasurementType> UpdateMeasurementType(MeasurementType measurementType)
     {
-        throw new NotImplementedException();
+        var measurementTypeDb = await _dbContext.MeasurementTypes.FirstOrDefaultAsync(m => m.id_measurement_type == measurementType.id_measurement_type);
+        if (measurementTypeDb == null)
+        {
+            return null; // Retorna null se o MeasurementType não for encontrado
+        }
+
+        measurementTypeDb.ds_name = measurementType.ds_name;
+        measurementTypeDb.tx_description = measurementType.tx_description;
+        measurementTypeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+        await _dbContext.SaveChangesAsync();
+        return measurementTypeDb;
+    }
+
+    public async void DeleteMeasurementType(int MeasurementTypeId)
+    {
+        var measurementTypeDb = await _dbContext.MeasurementTypes.FirstOrDefaultAsync(m => m.id_measurement_type == MeasurementTypeId);
+        if (measurementTypeDb != null)
+        {
+            measurementTypeDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

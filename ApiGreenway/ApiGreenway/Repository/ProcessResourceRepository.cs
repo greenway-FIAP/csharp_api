@@ -1,32 +1,58 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class ProcessResourceRepository : IProcessResourceRepository
 {
-    public Task<ProcessResource> AddProcessResource(ProcessResource processResource)
+    private readonly dbContext _dbContext;
+
+    public ProcessResourceRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteProcessResource(int ProcessResourceId)
+    public async Task<IEnumerable<ProcessResource>> GetProcessResources()
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProcessResources.Where(p => p.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<ProcessResource> GetProcessResourceById(int ProcessResourceId)
+    public async Task<ProcessResource> GetProcessResourceById(int ProcessResourceId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.ProcessResources.FirstOrDefaultAsync(p => p.id_process_resource == ProcessResourceId && p.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<ProcessResource>> GetProcessResources()
+    public async Task<ProcessResource> AddProcessResource(ProcessResource processResource)
     {
-        throw new NotImplementedException();
+        var processResourceDb = await _dbContext.ProcessResources.AddAsync(processResource);
+        await _dbContext.SaveChangesAsync();
+        return processResourceDb.Entity;
     }
 
-    public Task<ProcessResource> UpdateProcessResource(ProcessResource processResource)
+    public async Task<ProcessResource> UpdateProcessResource(ProcessResource processResource)
     {
-        throw new NotImplementedException();
+        var processResourceDb = await _dbContext.ProcessResources.FirstOrDefaultAsync(p => p.id_process_resource == processResource.id_process_resource);
+        if (processResourceDb == null)
+        {
+            return null; // Retorna null se o ProcessResource não for encontrado
+        }
+
+        processResourceDb.id_process = processResource.id_process;
+        processResourceDb.id_resource = processResource.id_resource;
+        processResourceDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+        await _dbContext.SaveChangesAsync();
+        return processResourceDb;
+    }
+    public async void DeleteProcessResource(int ProcessResourceId)
+    {
+        var processResourceDb = await _dbContext.ProcessResources.FirstOrDefaultAsync(p => p.id_process_resource == ProcessResourceId);
+        if (processResourceDb != null)
+        {
+            processResourceDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

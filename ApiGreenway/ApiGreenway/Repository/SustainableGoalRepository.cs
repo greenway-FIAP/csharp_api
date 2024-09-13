@@ -1,32 +1,61 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class SustainableGoalRepository : ISustainableGoalRepository
 {
-    public Task<SustainableGoal> AddSustainableGoal(SustainableGoal sustainableGoal)
+    private readonly dbContext _dbContext;
+
+    public SustainableGoalRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteSustainableGoal(int SustainableGoalId)
+    public async Task<IEnumerable<SustainableGoal>> GetSustainableGoals()
     {
-        throw new NotImplementedException();
+        return await _dbContext.SustainableGoals.Where(s => s.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<SustainableGoal> GetSustainableGoalById(int SustainableGoalId)
+    public async Task<SustainableGoal> GetSustainableGoalById(int SustainableGoalId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.SustainableGoals.FirstOrDefaultAsync(s => s.id_sustainable_goal == SustainableGoalId && s.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<SustainableGoal>> GetSustainableGoals()
+    public async Task<SustainableGoal> AddSustainableGoal(SustainableGoal sustainableGoal)
     {
-        throw new NotImplementedException();
+        var sustainableGoalDb = await _dbContext.SustainableGoals.AddAsync(sustainableGoal);
+        await _dbContext.SaveChangesAsync();
+        return sustainableGoalDb.Entity;
     }
 
-    public Task<SustainableGoal> UpdateSustainableGoal(SustainableGoal sustainableGoal)
+    public async Task<SustainableGoal> UpdateSustainableGoal(SustainableGoal sustainableGoal)
     {
-        throw new NotImplementedException();
+        var sustainableGoalDb = await _dbContext.SustainableGoals.FirstOrDefaultAsync(s => s.id_sustainable_goal == sustainableGoal.id_sustainable_goal);
+        if (sustainableGoalDb == null)
+        {
+            return null; // Retorna null se o SustainableGoal não for encontrado
+        }
+
+        sustainableGoalDb.ds_name = sustainableGoal.ds_name;
+        sustainableGoalDb.tx_description = sustainableGoal.tx_description;
+        sustainableGoalDb.vl_target = sustainableGoal.vl_target;
+        sustainableGoalDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+        sustainableGoalDb.id_badge = sustainableGoal.id_badge;
+
+        await _dbContext.SaveChangesAsync();
+        return sustainableGoalDb;
+    }
+
+    public async void DeleteSustainableGoal(int SustainableGoalId)
+    {
+        var sustainableGoalDb = await _dbContext.SustainableGoals.FirstOrDefaultAsync(s => s.id_sustainable_goal == SustainableGoalId);
+        if (sustainableGoalDb != null)
+        {
+            sustainableGoalDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

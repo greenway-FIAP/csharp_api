@@ -26,9 +26,6 @@ public class AddressRepository : IAddressRepository
 
     public async Task<Address> AddAddress(Address address)
     {
-        address.dt_updated_at = null; 
-        address.dt_finished_at = null; 
-
         var addressBd = await _dbContext.Addresses.AddAsync(address);
         await _dbContext.SaveChangesAsync();
         return addressBd.Entity;
@@ -49,8 +46,7 @@ public class AddressRepository : IAddressRepository
         addressDb.ds_uf = address.ds_uf;
         addressDb.ds_neighborhood = address.ds_neighborhood;
         addressDb.ds_city = address.ds_city;
-
-        address.dt_updated_at = DateTime.UtcNow; // Atualiza a data de atualização
+        addressDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return addressDb;
@@ -61,7 +57,7 @@ public class AddressRepository : IAddressRepository
         var addressDb = await _dbContext.Addresses.FirstOrDefaultAsync(d => d.id_address == addressId);
         if (addressDb != null)
         {
-            addressDb.dt_finished_at = DateTime.UtcNow;
+            addressDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
             // Atualiza o status do Address para finalizado
             await _dbContext.SaveChangesAsync();

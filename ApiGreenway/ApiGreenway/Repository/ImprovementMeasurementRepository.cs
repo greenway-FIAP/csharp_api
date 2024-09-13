@@ -1,32 +1,58 @@
-﻿using ApiGreenway.Models;
+﻿using ApiGreenway.Data;
+using ApiGreenway.Models;
 using ApiGreenway.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Repository;
 
 public class ImprovementMeasurementRepository : IImprovementMeasurementRepository
 {
-    public Task<ImprovementMeasurement> AddImprovementMeasurement(ImprovementMeasurement ImprovementMeasurement)
+    private readonly dbContext _dbContext;
+
+    public ImprovementMeasurementRepository(dbContext _dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = _dbContext;
     }
 
-    public void DeleteImprovementMeasurement(int ImprovementMeasurementId)
+    public async Task<IEnumerable<ImprovementMeasurement>> GetImprovementMeasurements()
     {
-        throw new NotImplementedException();
+        return await _dbContext.ImprovementMeasurements.Where(i => i.dt_finished_at == null).ToListAsync();
     }
 
-    public Task<ImprovementMeasurement> GetImprovementMeasurementById(int ImprovementMeasurementId)
+    public async Task<ImprovementMeasurement> GetImprovementMeasurementById(int ImprovementMeasurementId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.ImprovementMeasurements.FirstOrDefaultAsync(i => i.id_improvement_measurement == ImprovementMeasurementId && i.dt_finished_at == null);
     }
 
-    public Task<IEnumerable<ImprovementMeasurement>> GetImprovementMeasurements()
+    public async Task<ImprovementMeasurement> AddImprovementMeasurement(ImprovementMeasurement ImprovementMeasurement)
     {
-        throw new NotImplementedException();
+        var ImprovementMeasurementDb = await _dbContext.ImprovementMeasurements.AddAsync(ImprovementMeasurement);
+        await _dbContext.SaveChangesAsync();
+        return ImprovementMeasurementDb.Entity;
     }
 
-    public Task<ImprovementMeasurement> UpdateImprovementMeasurement(ImprovementMeasurement ImprovementMeasurement)
+    public async Task<ImprovementMeasurement> UpdateImprovementMeasurement(ImprovementMeasurement ImprovementMeasurement)
     {
-        throw new NotImplementedException();
+        var ImprovementMeasurementDb = await _dbContext.ImprovementMeasurements.FirstOrDefaultAsync(i => i.id_improvement_measurement == ImprovementMeasurement.id_improvement_measurement);
+        if (ImprovementMeasurementDb == null)
+        {
+            return null; // Retorna null se o ImprovementMeasurement não for encontrado
+        }
+
+        ImprovementMeasurementDb.id_sustainable_improvement_actions = ImprovementMeasurement.id_sustainable_improvement_actions;
+        ImprovementMeasurementDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+
+        await _dbContext.SaveChangesAsync();
+        return ImprovementMeasurementDb;
+    }
+
+    public async void DeleteImprovementMeasurement(int ImprovementMeasurementId)
+    {
+        var ImprovementMeasurementDb = await _dbContext.ImprovementMeasurements.FirstOrDefaultAsync(i => i.id_improvement_measurement == ImprovementMeasurementId);
+        if (ImprovementMeasurementDb != null)
+        {
+            ImprovementMeasurementDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
