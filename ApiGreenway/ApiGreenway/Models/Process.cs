@@ -12,6 +12,8 @@ public class Process
     public int id_process { get; set; }
 
     public required string ds_name { get; set; }
+
+    [StringLength(1)]
     public StatusProcess st_process { get; set; }
     public required int nr_priority { get; set; }
     public required DateOnly dt_start { get; set; }

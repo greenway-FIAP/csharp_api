@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20240912221112_AttUser")]
-    partial class AttUser
+    [Migration("20240914071633_AllTables")]
+    partial class AllTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,7 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_company")
+                    b.Property<int?>("id_company")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_address");
@@ -101,13 +101,14 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_badge_level")
+                    b.Property<int?>("id_badge_level")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_sustainable_goal")
+                    b.Property<int?>("id_sustainable_goal")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("st_badge")
+                        .HasMaxLength(1)
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_description")
@@ -174,14 +175,16 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_address")
+                    b.Property<int?>("id_address")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_sector")
+                    b.Property<int?>("id_sector")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("nr_cnpj")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<string>("nr_cnpj")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("NVARCHAR2(14)");
 
                     b.Property<int>("nr_size")
                         .HasColumnType("NUMBER(10)");
@@ -223,15 +226,16 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_company")
+                    b.Property<int?>("id_company")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_user")
+                    b.Property<int?>("id_user")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("nr_phone")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(11)
+                        .HasColumnType("NVARCHAR2(11)");
 
                     b.HasKey("id_company_representative");
 
@@ -255,7 +259,7 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_sustainable_improvement_actions")
+                    b.Property<int?>("id_sustainable_improvement_actions")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_improvement_measurement");
@@ -284,13 +288,13 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_improvement_measurement")
+                    b.Property<int?>("id_improvement_measurement")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_measurement_type")
+                    b.Property<int?>("id_measurement_type")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_sustainable_goal")
+                    b.Property<int?>("id_sustainable_goal")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_description")
@@ -319,10 +323,10 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_measurement")
+                    b.Property<int?>("id_measurement")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_process_step")
+                    b.Property<int?>("id_process_step")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<double>("nr_result")
@@ -391,16 +395,17 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_company")
+                    b.Property<int?>("id_company")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_company_representative")
+                    b.Property<int?>("id_company_representative")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("nr_priority")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("st_process")
+                        .HasMaxLength(1)
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_comments")
@@ -436,10 +441,10 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_badge")
+                    b.Property<int?>("id_badge")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_process")
+                    b.Property<int?>("id_process")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("url_badge")
@@ -468,10 +473,10 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_process")
+                    b.Property<int?>("id_process")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_resource")
+                    b.Property<int?>("id_resource")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_process_resource");
@@ -496,10 +501,10 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_process")
+                    b.Property<int?>("id_process")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("id_step")
+                    b.Property<int?>("id_step")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("id_process_step");
@@ -528,7 +533,7 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_product_type")
+                    b.Property<int?>("id_product_type")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<double>("nr_weight")
@@ -604,7 +609,7 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_resource_type")
+                    b.Property<int?>("id_resource_type")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<double>("nr_availability")
@@ -715,6 +720,7 @@ namespace ApiGreenway.Migrations
                         .HasColumnType("BINARY_DOUBLE");
 
                     b.Property<int>("st_step")
+                        .HasMaxLength(1)
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_description")
@@ -747,7 +753,7 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_badge")
+                    b.Property<int?>("id_badge")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("tx_description")
@@ -783,16 +789,17 @@ namespace ApiGreenway.Migrations
                     b.Property<DateTimeOffset?>("dt_updated_at")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
-                    b.Property<int>("id_sustainable_goal")
+                    b.Property<int?>("id_sustainable_goal")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("nr_priority")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("st_sustainable_action")
+                        .HasMaxLength(1)
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<string>("tx_description")
+                    b.Property<string>("tx_instruction")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 

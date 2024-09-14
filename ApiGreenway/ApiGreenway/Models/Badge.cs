@@ -15,6 +15,8 @@ public class Badge
     public required string ds_name { get; set; }
     public required string tx_description { get; set; }
     public required string ds_criteria { get; set; }
+
+    [StringLength(1)]
     public required StatusProcess st_badge { get; set; }
     public required string url_image { get; set; }
 

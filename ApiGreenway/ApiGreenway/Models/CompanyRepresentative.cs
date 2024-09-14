@@ -10,10 +10,11 @@ public class CompanyRepresentative
     [Key]
     public int id_company_representative { get; set; }
 
-
-    public required string nr_phone { get; set; }
-    public required string ds_role { get; set; }
     public required string ds_name { get; set; }
+    public required string ds_role { get; set; }
+    
+    [StringLength(11)]
+    public required string nr_phone { get; set; }
 
     [JsonIgnore]
     public DateTimeOffset dt_created_at { get; set; } = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília

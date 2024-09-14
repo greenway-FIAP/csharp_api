@@ -15,7 +15,9 @@ public class Company
     public required string tx_description { get; set; }
     public required double vl_current_revenue { get; set; }
     public required int nr_size { get; set; }
-    public required int nr_cnpj { get; set; }
+
+    [StringLength(14)]
+    public required string nr_cnpj { get; set; }
 
     [JsonIgnore]
     public DateTimeOffset dt_created_at { get; set; } = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
