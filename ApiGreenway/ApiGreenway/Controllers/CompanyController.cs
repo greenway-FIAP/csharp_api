@@ -2,7 +2,6 @@
 using ApiGreenway.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace ApiGreenway.Controllers;
 
@@ -17,6 +16,12 @@ public class CompanyController : ControllerBase
         this._companyRepository = companyRepository;
     }
 
+    /// <summary>
+    /// Obtém todas as empresas.
+    /// </summary>
+    /// <returns>Uma lista de empresas.</returns>
+    /// <response code="200">Retorna a lista de empresas</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
     {
@@ -31,6 +36,14 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Obtém uma empresa pelo ID.
+    /// </summary>
+    /// <param name="companyId">O ID da empresa.</param>
+    /// <returns>Uma empresa específica.</returns>
+    /// <response code="200">Retorna a empresa com o ID fornecido</response>
+    /// <response code="404">Se a empresa não for encontrada</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet("{companyId:int}")]
     public async Task<ActionResult<Company>> GetCompanyById(int companyId)
     {
@@ -39,7 +52,7 @@ public class CompanyController : ControllerBase
             var company = await _companyRepository.GetCompanyById(companyId);
             if (company == null)
             {
-                return NotFound($"Empresa com o Id: {companyId}, não foi encontrado(a)");
+                return NotFound($"Empresa com o Id: {companyId}, não foi encontrada");
             }
 
             return Ok(company);
@@ -50,6 +63,14 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Cria uma nova empresa.
+    /// </summary>
+    /// <param name="company">Os dados da empresa a ser criada.</param>
+    /// <returns>A empresa criada.</returns>
+    /// <response code="201">Retorna a empresa criada</response>
+    /// <response code="400">Se os dados da empresa forem inválidos</response>
+    /// <response code="500">Erro ao salvar os dados no Banco de Dados</response>
     [HttpPost]
     public async Task<ActionResult<Company>> CreateCompany([FromBody] Company company)
     {
@@ -61,9 +82,9 @@ public class CompanyController : ControllerBase
             }
 
             var createdCompany = await _companyRepository.AddCompany(company);
-            return CreatedAtAction(nameof(GetCompanyById), new 
-            { 
-                companyId = createdCompany.id_company 
+            return CreatedAtAction(nameof(GetCompanyById), new
+            {
+                companyId = createdCompany.id_company
             }, createdCompany);
         }
         catch (Exception)
@@ -72,6 +93,16 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Atualiza uma empresa existente.
+    /// </summary>
+    /// <param name="companyId">O ID da empresa a ser atualizada.</param>
+    /// <param name="company">Os novos dados da empresa.</param>
+    /// <returns>A empresa atualizada.</returns>
+    /// <response code="200">Retorna a empresa atualizada</response>
+    /// <response code="404">Se a empresa não for encontrada</response>
+    /// <response code="400">Se os dados da empresa forem inválidos</response>
+    /// <response code="500">Erro ao atualizar os dados no Banco de Dados</response>
     [HttpPut("{companyId:int}")]
     public async Task<ActionResult<Company>> UpdateCompany(int companyId, [FromBody] Company company)
     {
@@ -88,7 +119,7 @@ public class CompanyController : ControllerBase
 
             if (updatedCompany == null)
             {
-                return NotFound($"Empresa com o Id: {companyId}, não foi encontrado(a)");
+                return NotFound($"Empresa com o Id: {companyId}, não foi encontrada");
             }
 
             return Ok(updatedCompany);
@@ -99,6 +130,14 @@ public class CompanyController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Deleta uma empresa pelo ID.
+    /// </summary>
+    /// <param name="companyId">O ID da empresa a ser deletada.</param>
+    /// <returns>Mensagem de confirmação da exclusão.</returns>
+    /// <response code="200">Retorna uma mensagem de sucesso</response>
+    /// <response code="404">Se a empresa não for encontrada</response>
+    /// <response code="500">Erro ao deletar os dados no Banco de Dados</response>
     [HttpDelete("{companyId:int}")]
     public async Task<ActionResult<Company>> DeleteCompany(int companyId)
     {
@@ -108,7 +147,7 @@ public class CompanyController : ControllerBase
 
             if (deletedCompany == null)
             {
-                return NotFound($"Empresa com o Id: {companyId}, não foi encontrado(a)");
+                return NotFound($"Empresa com o Id: {companyId}, não foi encontrada");
             }
 
             _companyRepository.DeleteCompany(companyId);

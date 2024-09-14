@@ -3,121 +3,159 @@ using ApiGreenway.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiGreenway.Controllers;
-
-[Route("api/step")]
-[ApiController]
-public class StepController : ControllerBase
+namespace ApiGreenway.Controllers
 {
-    private readonly IStepRepository _stepRepository;
-
-    public StepController(IStepRepository stepRepository)
+    [Route("api/step")]
+    [ApiController]
+    public class StepController : ControllerBase
     {
-        this._stepRepository = stepRepository;
-    }
+        private readonly IStepRepository _stepRepository;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Step>>> GetSteps()
-    {
-        try
+        public StepController(IStepRepository stepRepository)
         {
-            var steps = await _stepRepository.GetSteps();
-            return Ok(steps);
+            this._stepRepository = stepRepository;
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
-        }
-    }
 
-    [HttpGet("{stepId:int}")]
-    public async Task<ActionResult<Step>> GetStepById(int stepId)
-    {
-        try
+        /// <summary>
+        /// Obtém todas as etapas.
+        /// </summary>
+        /// <returns>Uma lista de etapas.</returns>
+        /// <response code="200">Retorna a lista de etapas.</response>
+        /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Step>>> GetSteps()
         {
-            var step = await _stepRepository.GetStepById(stepId);
-            if (step == null)
+            try
             {
-                return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                var steps = await _stepRepository.GetSteps();
+                return Ok(steps);
             }
-
-            return Ok(step);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
-        }
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<Step>> CreateStep([FromBody] Step step)
-    {
-        try
-        {
-            if (step == null)
+            catch (Exception)
             {
-                return BadRequest("Alguns dados estão inválidos, verifique!!");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
             }
-
-            var createdStep = await _stepRepository.AddStep(step);
-            return CreatedAtAction(nameof(GetStepById), new 
-            { 
-                stepId = createdStep.id_step 
-            }, createdStep);
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar dados no Banco de Dados");
-        }
-    }
 
-    [HttpPut("{stepId:int}")]
-    public async Task<ActionResult<Step>> UpdateStep(int stepId, [FromBody] Step step)
-    {
-        try
+        /// <summary>
+        /// Obtém uma etapa pelo ID.
+        /// </summary>
+        /// <param name="stepId">O ID da etapa.</param>
+        /// <returns>A etapa correspondente ao ID.</returns>
+        /// <response code="200">Retorna a etapa encontrada.</response>
+        /// <response code="404">Etapa não encontrada.</response>
+        /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
+        [HttpGet("{stepId:int}")]
+        public async Task<ActionResult<Step>> GetStepById(int stepId)
         {
-            if (step == null)
+            try
             {
-                return BadRequest("Alguns dados estão inválidos, verifique!!");
+                var step = await _stepRepository.GetStepById(stepId);
+                if (step == null)
+                {
+                    return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                }
+
+                return Ok(step);
             }
-
-            step.id_step = stepId;
-            var updatedStep = await _stepRepository.UpdateStep(step);
-
-            if (updatedStep == null)
+            catch (Exception)
             {
-                return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
             }
-
-            return Ok(updatedStep);
         }
-        catch (Exception)
+
+        /// <summary>
+        /// Cria uma nova etapa.
+        /// </summary>
+        /// <param name="step">A etapa a ser criada.</param>
+        /// <returns>A etapa criada.</returns>
+        /// <response code="201">Etapa criada com sucesso.</response>
+        /// <response code="400">Dados inválidos.</response>
+        /// <response code="500">Erro ao adicionar dados no banco de dados.</response>
+        [HttpPost]
+        public async Task<ActionResult<Step>> CreateStep([FromBody] Step step)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao atualizar dados no Banco de Dados");
-        }
-    }
-
-    [HttpDelete("{stepId:int}")]
-    public async Task<ActionResult<Step>> DeleteStep(int stepId)
-    {
-        try
-        {
-
-            var deletedStep = await _stepRepository.GetStepById(stepId);
-
-            if (deletedStep == null)
+            try
             {
-                return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                if (step == null)
+                {
+                    return BadRequest("Alguns dados estão inválidos, verifique!!");
+                }
+
+                var createdStep = await _stepRepository.AddStep(step);
+                return CreatedAtAction(nameof(GetStepById), new
+                {
+                    stepId = createdStep.id_step
+                }, createdStep);
             }
-
-            _stepRepository.DeleteStep(stepId);
-
-            return Ok("Etapa, foi deletado(a) com sucesso!");
-
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar dados no Banco de Dados");
+            }
         }
-        catch (Exception)
+
+        /// <summary>
+        /// Atualiza uma etapa existente.
+        /// </summary>
+        /// <param name="stepId">O ID da etapa a ser atualizada.</param>
+        /// <param name="step">Os novos dados da etapa.</param>
+        /// <returns>A etapa atualizada.</returns>
+        /// <response code="200">Etapa atualizada com sucesso.</response>
+        /// <response code="404">Etapa não encontrada.</response>
+        /// <response code="400">Dados inválidos.</response>
+        /// <response code="500">Erro ao atualizar dados no banco de dados.</response>
+        [HttpPut("{stepId:int}")]
+        public async Task<ActionResult<Step>> UpdateStep(int stepId, [FromBody] Step step)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao deletar dados no Banco de Dados");
+            try
+            {
+                if (step == null)
+                {
+                    return BadRequest("Alguns dados estão inválidos, verifique!!");
+                }
+
+                step.id_step = stepId;
+                var updatedStep = await _stepRepository.UpdateStep(step);
+
+                if (updatedStep == null)
+                {
+                    return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                }
+
+                return Ok(updatedStep);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao atualizar dados no Banco de Dados");
+            }
+        }
+
+        /// <summary>
+        /// Deleta uma etapa pelo ID.
+        /// </summary>
+        /// <param name="stepId">O ID da etapa a ser deletada.</param>
+        /// <returns>Uma mensagem de sucesso.</returns>
+        /// <response code="200">Etapa deletada com sucesso.</response>
+        /// <response code="404">Etapa não encontrada.</response>
+        /// <response code="500">Erro ao deletar dados no banco de dados.</response>
+        [HttpDelete("{stepId:int}")]
+        public async Task<ActionResult<Step>> DeleteStep(int stepId)
+        {
+            try
+            {
+                var deletedStep = await _stepRepository.GetStepById(stepId);
+
+                if (deletedStep == null)
+                {
+                    return NotFound($"Etapa com o ID: {stepId}, não foi encontrado(a)!");
+                }
+
+                _stepRepository.DeleteStep(stepId);
+                return Ok("Etapa, foi deletado(a) com sucesso!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao deletar dados no Banco de Dados");
+            }
         }
     }
 }
