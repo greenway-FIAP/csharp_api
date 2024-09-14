@@ -15,6 +15,8 @@ public class Step
     public required string ds_name { get; set; }
     public required string tx_description { get; set; }
     public required double nr_estimated_time { get; set; }
+
+    [StringLength(1)]
     public required StatusProcess st_step { get; set; }
     public DateOnly dt_start { get; set; }
     public DateOnly dt_end { get; set; }

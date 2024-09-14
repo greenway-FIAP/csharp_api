@@ -16,6 +16,12 @@ public class CompanyRepresentativeController : ControllerBase
         this._companyRepresentativeRepository = companyRepresentativeRepository;
     }
 
+    /// <summary>
+    /// Obtém todos os representantes das empresas.
+    /// </summary>
+    /// <returns>Uma lista de representantes das empresas.</returns>
+    /// <response code="200">Retorna a lista de representantes das empresas</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompanyRepresentative>>> GetCompanyRepresentatives()
     {
@@ -30,6 +36,14 @@ public class CompanyRepresentativeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Obtém um representante da empresa pelo ID.
+    /// </summary>
+    /// <param name="companyRepresentativeId">O ID do representante da empresa.</param>
+    /// <returns>Um representante da empresa específico.</returns>
+    /// <response code="200">Retorna o representante da empresa com o ID fornecido</response>
+    /// <response code="404">Se o representante da empresa não for encontrado</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet("{companyRepresentativeId:int}")]
     public async Task<ActionResult<CompanyRepresentative>> GetCompanyRepresentativeById(int companyRepresentativeId)
     {
@@ -49,6 +63,14 @@ public class CompanyRepresentativeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Cria um novo representante da empresa.
+    /// </summary>
+    /// <param name="companyRepresentative">Os dados do representante da empresa a ser criado.</param>
+    /// <returns>O representante da empresa criado.</returns>
+    /// <response code="201">Retorna o representante da empresa criado</response>
+    /// <response code="400">Se os dados do representante da empresa forem inválidos</response>
+    /// <response code="500">Erro ao salvar os dados no Banco de Dados</response>
     [HttpPost]
     public async Task<ActionResult<CompanyRepresentative>> CreateCompanyRepresentative([FromBody] CompanyRepresentative companyRepresentative)
     {
@@ -60,9 +82,9 @@ public class CompanyRepresentativeController : ControllerBase
             }
 
             var createdCompanyRepresentative = await _companyRepresentativeRepository.AddCompanyRepresentative(companyRepresentative);
-            return CreatedAtAction(nameof(GetCompanyRepresentativeById), new 
-            { 
-                companyRepresentativeId = createdCompanyRepresentative.id_company_representative 
+            return CreatedAtAction(nameof(GetCompanyRepresentativeById), new
+            {
+                companyRepresentativeId = createdCompanyRepresentative.id_company_representative
             }, createdCompanyRepresentative);
         }
         catch (Exception)
@@ -71,6 +93,16 @@ public class CompanyRepresentativeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Atualiza um representante da empresa existente.
+    /// </summary>
+    /// <param name="companyRepresentativeId">O ID do representante da empresa a ser atualizado.</param>
+    /// <param name="companyRepresentative">Os novos dados do representante da empresa.</param>
+    /// <returns>O representante da empresa atualizado.</returns>
+    /// <response code="200">Retorna o representante da empresa atualizado</response>
+    /// <response code="404">Se o representante da empresa não for encontrado</response>
+    /// <response code="400">Se os dados do representante da empresa forem inválidos</response>
+    /// <response code="500">Erro ao atualizar os dados no Banco de Dados</response>
     [HttpPut("{companyRepresentativeId:int}")]
     public async Task<ActionResult<CompanyRepresentative>> UpdateCompanyRepresentative(int companyRepresentativeId, [FromBody] CompanyRepresentative companyRepresentative)
     {
@@ -97,6 +129,14 @@ public class CompanyRepresentativeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Deleta um representante da empresa pelo ID.
+    /// </summary>
+    /// <param name="companyRepresentativeId">O ID do representante da empresa a ser deletado.</param>
+    /// <returns>Mensagem de confirmação da exclusão.</returns>
+    /// <response code="200">Retorna uma mensagem de sucesso</response>
+    /// <response code="404">Se o representante da empresa não for encontrado</response>
+    /// <response code="500">Erro ao deletar os dados no Banco de Dados</response>
     [HttpDelete("{companyRepresentativeId:int}")]
     public async Task<ActionResult<CompanyRepresentative>> DeleteCompanyRepresentative(int companyRepresentativeId)
     {

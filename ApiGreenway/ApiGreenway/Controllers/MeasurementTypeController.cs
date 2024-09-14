@@ -3,119 +3,160 @@ using ApiGreenway.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiGreenway.Controllers;
-
-[Route("api/measurement-type")]
-[ApiController]
-public class MeasurementTypeController : ControllerBase
+namespace ApiGreenway.Controllers
 {
-    private readonly IMeasurementTypeRepository _measurementTypeRepository;
-
-    public MeasurementTypeController(IMeasurementTypeRepository measurementTypeRepository)
+    [Route("api/measurement-type")]
+    [ApiController]
+    public class MeasurementTypeController : ControllerBase
     {
-        this._measurementTypeRepository = measurementTypeRepository;
-    }
+        private readonly IMeasurementTypeRepository _measurementTypeRepository;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<MeasurementType>>> GetMeasurementTypes()
-    {
-        try
+        public MeasurementTypeController(IMeasurementTypeRepository measurementTypeRepository)
         {
-            var measurementTypes = await _measurementTypeRepository.GetMeasurementTypes();
-            return Ok(measurementTypes);
+            this._measurementTypeRepository = measurementTypeRepository;
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
-        }
-    }
 
-    [HttpGet("{measurementTypeId:int}")]
-    public async Task<ActionResult<MeasurementType>> GetMeasurementTypeById(int measurementTypeId)
-    {
-        try
+        /// <summary>
+        /// Obtém todos os tipos de medição.
+        /// </summary>
+        /// <returns>Uma lista de tipos de medição.</returns>
+        /// <response code="200">Retorna a lista de tipos de medição.</response>
+        /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MeasurementType>>> GetMeasurementTypes()
         {
-            var measurementType = await _measurementTypeRepository.GetMeasurementTypeById(measurementTypeId);
-
-            if (measurementType == null)
+            try
             {
-                return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
+                var measurementTypes = await _measurementTypeRepository.GetMeasurementTypes();
+                return Ok(measurementTypes);
             }
-
-            return Ok(measurementType);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
-        }
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<MeasurementType>> CreateMeasurementType([FromBody] MeasurementType measurementType)
-    {
-        try
-        {
-            if (measurementType == null)
+            catch (Exception)
             {
-                return BadRequest("Alguns dados estão inválidos, verifique!!");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
             }
-
-            var createdMeasurementType = await _measurementTypeRepository.AddMeasurementType(measurementType);
-            return CreatedAtAction(nameof(GetMeasurementTypeById), new 
-            { 
-                measurementTypeId = createdMeasurementType.id_measurement_type 
-            }, createdMeasurementType);
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar dados no Banco de Dados");
-        }
-    }
 
-    [HttpPut("{measurementTypeId:int}")]
-    public async Task<ActionResult<MeasurementType>> UpdateMeasurementType(int measurementTypeId, [FromBody] MeasurementType measurementType)
-    {
-        try
+        /// <summary>
+        /// Obtém um tipo de medição pelo ID.
+        /// </summary>
+        /// <param name="measurementTypeId">O ID do tipo de medição.</param>
+        /// <returns>O tipo de medição correspondente ao ID.</returns>
+        /// <response code="200">Retorna o tipo de medição encontrado.</response>
+        /// <response code="404">Tipo de medição não encontrado.</response>
+        /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
+        [HttpGet("{measurementTypeId:int}")]
+        public async Task<ActionResult<MeasurementType>> GetMeasurementTypeById(int measurementTypeId)
         {
-            if (measurementType == null)
+            try
             {
-                return BadRequest("Alguns dados estão inválidos, verifique!!");
+                var measurementType = await _measurementTypeRepository.GetMeasurementTypeById(measurementTypeId);
+
+                if (measurementType == null)
+                {
+                    return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
+                }
+
+                return Ok(measurementType);
             }
-
-            measurementType.id_measurement_type = measurementTypeId;
-            var updatedMeasurementType = await _measurementTypeRepository.UpdateMeasurementType(measurementType);
-
-            if (updatedMeasurementType == null)
+            catch (Exception)
             {
-                return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
             }
-
-            return Ok(updatedMeasurementType);
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao atualizar dados no Banco de Dados");
-        }
-    }
 
-    [HttpDelete("{measurementTypeId:int}")]
-    public async Task<ActionResult<MeasurementType>> DeleteMeasurementType(int measurementTypeId)
-    {
-        try
+        /// <summary>
+        /// Cria um novo tipo de medição.
+        /// </summary>
+        /// <param name="measurementType">O tipo de medição a ser criado.</param>
+        /// <returns>O tipo de medição criado.</returns>
+        /// <response code="201">Tipo de medição criado com sucesso.</response>
+        /// <response code="400">Dados inválidos.</response>
+        /// <response code="500">Erro ao adicionar dados no banco de dados.</response>
+        [HttpPost]
+        public async Task<ActionResult<MeasurementType>> CreateMeasurementType([FromBody] MeasurementType measurementType)
         {
-            var deletedMeasurementType = await _measurementTypeRepository.GetMeasurementTypeById(measurementTypeId);
-
-            if (deletedMeasurementType == null)
+            try
             {
-                return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
-            }
+                if (measurementType == null)
+                {
+                    return BadRequest("Alguns dados estão inválidos, verifique!!");
+                }
 
-            _measurementTypeRepository.DeleteMeasurementType(measurementTypeId);
-            return Ok("Tipo de Medição, foi deletado(a) com sucesso!");
+                var createdMeasurementType = await _measurementTypeRepository.AddMeasurementType(measurementType);
+                return CreatedAtAction(nameof(GetMeasurementTypeById), new
+                {
+                    measurementTypeId = createdMeasurementType.id_measurement_type
+                }, createdMeasurementType);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar dados no Banco de Dados");
+            }
         }
-        catch (Exception)
+
+        /// <summary>
+        /// Atualiza um tipo de medição existente.
+        /// </summary>
+        /// <param name="measurementTypeId">O ID do tipo de medição a ser atualizado.</param>
+        /// <param name="measurementType">Os novos dados do tipo de medição.</param>
+        /// <returns>O tipo de medição atualizado.</returns>
+        /// <response code="200">Tipo de medição atualizado com sucesso.</response>
+        /// <response code="404">Tipo de medição não encontrado.</response>
+        /// <response code="400">Dados inválidos.</response>
+        /// <response code="500">Erro ao atualizar dados no banco de dados.</response>
+        [HttpPut("{measurementTypeId:int}")]
+        public async Task<ActionResult<MeasurementType>> UpdateMeasurementType(int measurementTypeId, [FromBody] MeasurementType measurementType)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao deletar dados no Banco de Dados");
+            try
+            {
+                if (measurementType == null)
+                {
+                    return BadRequest("Alguns dados estão inválidos, verifique!!");
+                }
+
+                measurementType.id_measurement_type = measurementTypeId;
+                var updatedMeasurementType = await _measurementTypeRepository.UpdateMeasurementType(measurementType);
+
+                if (updatedMeasurementType == null)
+                {
+                    return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
+                }
+
+                return Ok(updatedMeasurementType);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao atualizar dados no Banco de Dados");
+            }
+        }
+
+        /// <summary>
+        /// Deleta um tipo de medição pelo ID.
+        /// </summary>
+        /// <param name="measurementTypeId">O ID do tipo de medição a ser deletado.</param>
+        /// <returns>Uma mensagem de sucesso.</returns>
+        /// <response code="200">Tipo de medição deletado com sucesso.</response>
+        /// <response code="404">Tipo de medição não encontrado.</response>
+        /// <response code="500">Erro ao deletar dados no banco de dados.</response>
+        [HttpDelete("{measurementTypeId:int}")]
+        public async Task<ActionResult<MeasurementType>> DeleteMeasurementType(int measurementTypeId)
+        {
+            try
+            {
+                var deletedMeasurementType = await _measurementTypeRepository.GetMeasurementTypeById(measurementTypeId);
+
+                if (deletedMeasurementType == null)
+                {
+                    return NotFound($"Tipo de Medição com o ID: {measurementTypeId}, não foi encontrado(a)!");
+                }
+
+                _measurementTypeRepository.DeleteMeasurementType(measurementTypeId);
+                return Ok("Tipo de Medição, foi deletado(a) com sucesso!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao deletar dados no Banco de Dados");
+            }
         }
     }
 }

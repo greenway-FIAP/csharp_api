@@ -40,7 +40,7 @@ public class SustainableImprovementActionsRepository : ISustainableImprovementAc
         }
 
         sustainableImprovementActionsDb.ds_name = sustainableImprovementActions.ds_name;
-        sustainableImprovementActionsDb.tx_description = sustainableImprovementActions.tx_description;
+        sustainableImprovementActionsDb.tx_instruction = sustainableImprovementActions.tx_instruction;
         sustainableImprovementActionsDb.st_sustainable_action = sustainableImprovementActions.st_sustainable_action;
         sustainableImprovementActionsDb.nr_priority = sustainableImprovementActions.nr_priority;
         sustainableImprovementActionsDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília

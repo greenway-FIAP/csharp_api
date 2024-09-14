@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApiGreenway.Migrations
 {
     /// <inheritdoc />
-    public partial class alltables : Migration
+    public partial class AllTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,7 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,10 +42,13 @@ namespace ApiGreenway.Migrations
                     ds_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     tx_description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     ds_criteria = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    st_badge = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    st_badge = table.Column<int>(type: "NUMBER(10)", maxLength: 1, nullable: false),
                     url_image = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    id_badge_level = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
+                    dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
+                    dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
+                    id_badge_level = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,12 +82,12 @@ namespace ApiGreenway.Migrations
                     tx_description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     vl_current_revenue = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
                     nr_size = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    nr_cnpj = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    nr_cnpj = table.Column<string>(type: "NVARCHAR2(14)", maxLength: 14, nullable: false),
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_sector = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_address = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_sector = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_address = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,14 +100,14 @@ namespace ApiGreenway.Migrations
                 {
                     id_company_representative = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    nr_phone = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    ds_role = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     ds_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    ds_role = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    nr_phone = table.Column<string>(type: "NVARCHAR2(11)", maxLength: 11, nullable: false),
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_user = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_user = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,7 +123,7 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_sustainable_improvement_actions = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_sustainable_improvement_actions = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -138,9 +141,9 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_measurement_type = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_improvement_measurement = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_measurement_type = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_improvement_measurement = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,8 +160,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_measurement = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_process_step = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_measurement = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_process_step = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -189,7 +192,7 @@ namespace ApiGreenway.Migrations
                     id_process = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     ds_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    st_process = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    st_process = table.Column<int>(type: "NUMBER(10)", maxLength: 1, nullable: false),
                     nr_priority = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     dt_start = table.Column<string>(type: "NVARCHAR2(10)", nullable: false),
                     dt_end = table.Column<string>(type: "NVARCHAR2(10)", nullable: false),
@@ -198,8 +201,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_company_representative = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_company = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_company_representative = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -217,8 +220,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_badge = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_badge = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -234,8 +237,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_resource = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_resource = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -251,8 +254,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_step = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_step = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_process = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,7 +276,7 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_product_type = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_product_type = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -311,7 +314,7 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_resource_type = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_resource_type = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -361,7 +364,7 @@ namespace ApiGreenway.Migrations
                     ds_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     tx_description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     nr_estimated_time = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
-                    st_step = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    st_step = table.Column<int>(type: "NUMBER(10)", maxLength: 1, nullable: false),
                     dt_start = table.Column<string>(type: "NVARCHAR2(10)", nullable: false),
                     dt_end = table.Column<string>(type: "NVARCHAR2(10)", nullable: false),
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
@@ -385,7 +388,7 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_badge = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_badge = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -399,13 +402,13 @@ namespace ApiGreenway.Migrations
                     id_sustainable_improvement_action = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     ds_name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    tx_description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    st_sustainable_action = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    tx_instruction = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    st_sustainable_action = table.Column<int>(type: "NUMBER(10)", maxLength: 1, nullable: false),
                     nr_priority = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_sustainable_goal = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -423,8 +426,8 @@ namespace ApiGreenway.Migrations
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
                     dt_updated_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
                     dt_finished_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: true),
-                    id_user_type = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    id_company_representative = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    id_user_type = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    id_company_representative = table.Column<int>(type: "NUMBER(10)", nullable: true)
                 },
                 constraints: table =>
                 {

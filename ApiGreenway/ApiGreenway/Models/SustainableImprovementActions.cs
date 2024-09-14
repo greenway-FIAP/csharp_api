@@ -13,7 +13,9 @@ public class SustainableImprovementActions
 
 
     public required string ds_name { get; set; }
-    public required string tx_description { get; set; }
+    public required string tx_instruction { get; set; }
+
+    [StringLength(1)]
     public required StatusProcess st_sustainable_action { get; set; }
     public required int nr_priority { get; set; }
 

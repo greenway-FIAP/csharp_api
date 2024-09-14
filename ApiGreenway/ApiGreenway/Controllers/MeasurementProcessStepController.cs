@@ -1,5 +1,4 @@
 ﻿using ApiGreenway.Models;
-using ApiGreenway.Repository;
 using ApiGreenway.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +16,12 @@ public class MeasurementProcessStepController : ControllerBase
         this._measurementProcessStepRepository = measurementProcessStepRepository;
     }
 
+    /// <summary>
+    /// Obtém todos os passos do processo de medição.
+    /// </summary>
+    /// <returns>Uma lista de passos do processo de medição.</returns>
+    /// <response code="200">Retorna a lista de passos do processo de medição</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MeasurementProcessStep>>> GetMeasurementProcessSteps()
     {
@@ -31,6 +36,14 @@ public class MeasurementProcessStepController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Obtém um passo do processo de medição pelo ID.
+    /// </summary>
+    /// <param name="measurementProcessStepId">O ID do passo do processo de medição.</param>
+    /// <returns>Um passo do processo de medição específico.</returns>
+    /// <response code="200">Retorna o passo do processo de medição com o ID fornecido</response>
+    /// <response code="404">Se o passo do processo de medição não for encontrado</response>
+    /// <response code="500">Erro ao recuperar os dados do Banco de Dados</response>
     [HttpGet("{measurementProcessStepId:int}")]
     public async Task<ActionResult<MeasurementProcessStep>> GetMeasurementProcessStepById(int measurementProcessStepId)
     {
@@ -50,6 +63,14 @@ public class MeasurementProcessStepController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Cria um novo passo do processo de medição.
+    /// </summary>
+    /// <param name="measurementProcessStep">Os dados do passo do processo de medição a ser criado.</param>
+    /// <returns>O passo do processo de medição criado.</returns>
+    /// <response code="201">Retorna o passo do processo de medição criado</response>
+    /// <response code="400">Se os dados do passo do processo de medição forem inválidos</response>
+    /// <response code="500">Erro ao salvar os dados no Banco de Dados</response>
     [HttpPost]
     public async Task<ActionResult<MeasurementProcessStep>> CreateMeasurementProcessStep([FromBody] MeasurementProcessStep measurementProcessStep)
     {
@@ -61,9 +82,9 @@ public class MeasurementProcessStepController : ControllerBase
             }
 
             var createdMeasurementProcessStep = await _measurementProcessStepRepository.AddMeasurementProcessStep(measurementProcessStep);
-            return CreatedAtAction(nameof(GetMeasurementProcessStepById), new 
-            { 
-                measurementProcessStepId = createdMeasurementProcessStep.id_measurement_process_step 
+            return CreatedAtAction(nameof(GetMeasurementProcessStepById), new
+            {
+                measurementProcessStepId = createdMeasurementProcessStep.id_measurement_process_step
             }, createdMeasurementProcessStep);
         }
         catch (Exception)
@@ -72,8 +93,18 @@ public class MeasurementProcessStepController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Atualiza um passo do processo de medição existente.
+    /// </summary>
+    /// <param name="measurementProcessStepId">O ID do passo do processo de medição a ser atualizado.</param>
+    /// <param name="measurementProcessStep">Os novos dados do passo do processo de medição.</param>
+    /// <returns>O passo do processo de medição atualizado.</returns>
+    /// <response code="200">Retorna o passo do processo de medição atualizado</response>
+    /// <response code="404">Se o passo do processo de medição não for encontrado</response>
+    /// <response code="400">Se os dados do passo do processo de medição forem inválidos</response>
+    /// <response code="500">Erro ao atualizar os dados no Banco de Dados</response>
     [HttpPut("{measurementProcessStepId:int}")]
-    public async Task<ActionResult<Address>> UpdateAddress(int measurementProcessStepId, [FromBody] MeasurementProcessStep measurementProcessStep)
+    public async Task<ActionResult<MeasurementProcessStep>> UpdateMeasurementProcessStep(int measurementProcessStepId, [FromBody] MeasurementProcessStep measurementProcessStep)
     {
         try
         {
@@ -98,6 +129,14 @@ public class MeasurementProcessStepController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Deleta um passo do processo de medição pelo ID.
+    /// </summary>
+    /// <param name="measurementProcessStepId">O ID do passo do processo de medição a ser deletado.</param>
+    /// <returns>Mensagem de confirmação da exclusão.</returns>
+    /// <response code="200">Retorna uma mensagem de sucesso</response>
+    /// <response code="404">Se o passo do processo de medição não for encontrado</response>
+    /// <response code="500">Erro ao deletar os dados no Banco de Dados</response>
     [HttpDelete("{measurementProcessStepId:int}")]
     public async Task<ActionResult<MeasurementProcessStep>> DeleteMeasurementProcessStep(int measurementProcessStepId)
     {
