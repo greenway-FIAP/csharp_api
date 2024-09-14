@@ -39,7 +39,7 @@ O progresso das empresas em direção às suas metas de sustentabilidade é **mo
 
 As empresas que utilizam a plataforma recebem **certificações automáticas** em formato de badges. Essas certificações atestam o comprometimento da empresa com práticas sustentáveis, fortalecendo sua reputação no mercado e sua relação com os consumidores.
 
-[Link da Apresentação](#)
+[Link da Apresentação](https://youtu.be/eGrA5A0sdb8)
 
 ## Integrantes
 
