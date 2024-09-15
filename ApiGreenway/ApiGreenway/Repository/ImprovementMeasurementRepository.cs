@@ -39,8 +39,9 @@ public class ImprovementMeasurementRepository : IImprovementMeasurementRepositor
             return null; // Retorna null se o ImprovementMeasurement não for encontrado
         }
 
-        ImprovementMeasurementDb.id_sustainable_improvement_actions = ImprovementMeasurement.id_sustainable_improvement_actions;
         ImprovementMeasurementDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+        ImprovementMeasurementDb.id_sustainable_improvement_actions = ImprovementMeasurement.id_sustainable_improvement_actions;
+
 
         await _dbContext.SaveChangesAsync();
         return ImprovementMeasurementDb;

@@ -44,9 +44,9 @@ public class CompanyRepository : ICompanyRepository
         CompanyDb.vl_current_revenue = Company.vl_current_revenue;
         CompanyDb.nr_size = Company.nr_size;
         CompanyDb.nr_cnpj = Company.nr_cnpj;
+        CompanyDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         CompanyDb.id_sector = Company.id_sector;
         CompanyDb.id_address = Company.id_address;
-        CompanyDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return CompanyDb;

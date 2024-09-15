@@ -44,9 +44,9 @@ public class BadgeRepository : IBadgeRepository
         BadgeDb.ds_criteria = Badge.ds_criteria;
         BadgeDb.st_badge = Badge.st_badge;
         BadgeDb.url_image = Badge.url_image;
+        BadgeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         BadgeDb.id_badge_level = Badge.id_badge_level;
         BadgeDb.id_sustainable_goal = Badge.id_sustainable_goal;
-        BadgeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return BadgeDb;
