@@ -1,6 +1,9 @@
 using ApiGreenway.Data;
 using ApiGreenway.Repository;
 using ApiGreenway.Repository.Interface;
+using ApiGreenway.Services.Authentication;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,6 +65,17 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
+});
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("greenway-firebase.json")
+});
+
+builder.Services.AddHttpClient<IAuthService, AuthService>((sp, httpClient) =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    httpClient.BaseAddress = new Uri(configuration["Authentication:TokenUri"]!);
 });
 
 var app = builder.Build();

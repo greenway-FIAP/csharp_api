@@ -1,6 +1,9 @@
 ﻿using ApiGreenway.Models;
+using ApiGreenway.Models.Dtos;
 using ApiGreenway.Repository;
 using ApiGreenway.Repository.Interface;
+using ApiGreenway.Services.Authentication;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +18,13 @@ namespace ApiGreenway.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
 
-        public UserController(IUserRepository userRepository, IConfiguration configuration)
+        public UserController(IUserRepository userRepository, IAuthService authService, IConfiguration configuration)
         {
             this._userRepository = userRepository;
+            this._authService = authService;
             this._configuration = configuration;
         }
 
@@ -30,7 +35,7 @@ namespace ApiGreenway.Controllers
         /// <response code="200">Retorna a lista de usuários.</response>
         /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDetailedDTO>>> GetUsers()
         {
             try
             {
@@ -52,7 +57,7 @@ namespace ApiGreenway.Controllers
         /// <response code="404">Usuário não encontrado.</response>
         /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
         [HttpGet("{userId}")]
-        public async Task<ActionResult<User>> GetUserById(int userId)
+        public async Task<ActionResult<UserDetailedDTO>> GetUserById(int userId)
         {
             try
             {
@@ -69,7 +74,7 @@ namespace ApiGreenway.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao recuperar os dados do Banco de Dados");
             }
         }
-
+        /*
         /// <summary>
         /// Registra um novo usuário.
         /// </summary>
@@ -124,8 +129,39 @@ namespace ApiGreenway.Controllers
             string token = CreateToken(existingUser);
             return Ok(token);
         }
+        */
 
-        private string CreateToken(User user)
+        [HttpPost("register")]
+        public async Task<ActionResult<string>> Register([FromBody] UserRegisterDTO request)
+        {
+
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest("Alguns dados estão inválidos, verifique!!");
+                }
+
+                var createdUser = await _authService.RegisterAsync(request);
+
+                return CreatedAtAction(nameof(GetUserById), new
+                {
+                    userId = request
+                }, createdUser);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar dados no Banco de Dados");
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> Login([FromBody] UserLoginDTO request)
+        {
+            return await _authService.LoginAsync(request);
+        }
+
+        /*private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
@@ -143,6 +179,7 @@ namespace ApiGreenway.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        */
 
         /// <summary>
         /// Atualiza um usuário existente.
@@ -155,7 +192,7 @@ namespace ApiGreenway.Controllers
         /// <response code="400">Dados inválidos.</response>
         /// <response code="500">Erro ao atualizar os dados no banco de dados.</response>
         [HttpPut("{userId:int}")]
-        public async Task<ActionResult<string>> UpdateUser(int userId, [FromBody] User user)
+        public async Task<ActionResult<string>> UpdateUser(int userId, [FromBody] UserUpdateDto user)
         {
             try
             {
