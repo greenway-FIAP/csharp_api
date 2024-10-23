@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Google Cloud Service Account Credentials
-greenway-*.json
+ApiGreenway/ApiGreenway/greenway-*.json
