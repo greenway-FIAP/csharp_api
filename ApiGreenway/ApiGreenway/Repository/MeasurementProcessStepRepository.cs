@@ -40,9 +40,9 @@ public class MeasurementProcessStepRepository : IMeasurementProcessStepRepositor
         }
 
         MeasurementProcessStepDb.nr_result = MeasurementProcessStep.nr_result;
+        MeasurementProcessStepDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         MeasurementProcessStepDb.id_measurement = MeasurementProcessStep.id_measurement;
         MeasurementProcessStepDb.id_process_step = MeasurementProcessStep.id_process_step;
-        MeasurementProcessStepDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return MeasurementProcessStepDb;

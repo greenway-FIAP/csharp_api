@@ -46,9 +46,9 @@ public class ProcessRepository : IProcessRepository
         processDb.dt_end = process.dt_end;
         processDb.tx_description = process.tx_description;
         processDb.tx_comments = process.tx_comments;
+        processDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         processDb.id_company = process.id_company;
         processDb.id_company_representative = process.id_company_representative;
-        processDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return processDb;

@@ -41,10 +41,10 @@ public class MeasurementRepository : IMeasurementRepository
 
         MeasurementDb.ds_name = Measurement.ds_name;
         MeasurementDb.tx_description = Measurement.tx_description;
+        MeasurementDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         MeasurementDb.id_measurement_type = Measurement.id_measurement_type;
         MeasurementDb.id_improvement_measurement = Measurement.id_improvement_measurement;
         MeasurementDb.id_sustainable_goal = Measurement.id_sustainable_goal;
-        MeasurementDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return MeasurementDb;

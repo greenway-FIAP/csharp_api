@@ -9,9 +9,9 @@ namespace ApiGreenway.Models;
 public class User
 {
     [Key]
+    [JsonIgnore]
     public int id_user { get; set; }
 
-    
     public string ds_email { get; set; } = string.Empty;
     public string ds_password { get; set; } = string.Empty;
 

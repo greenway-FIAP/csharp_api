@@ -40,9 +40,9 @@ public class ProcessBadgeRepository : IProcessBadgeRepository
 
         processBadgeDb.dt_expiration_date = processBadge.dt_expiration_date;
         processBadgeDb.url_badge = processBadge.url_badge;
+        processBadgeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         processBadgeDb.id_process = processBadge.id_process;
         processBadgeDb.id_badge = processBadge.id_badge;
-        processBadgeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return processBadgeDb;

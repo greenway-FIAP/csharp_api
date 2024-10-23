@@ -42,9 +42,9 @@ public class CompanyRepresentativeRepository : ICompanyRepresentativeRepository
         CompanyRepresentativeDb.nr_phone = CompanyRepresentative.nr_phone;
         CompanyRepresentativeDb.ds_role = CompanyRepresentative.ds_role;
         CompanyRepresentativeDb.ds_name = CompanyRepresentative.ds_name;
+        CompanyRepresentativeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         CompanyRepresentativeDb.id_user = CompanyRepresentative.id_user;
         CompanyRepresentativeDb.id_company = CompanyRepresentative.id_company;
-        CompanyRepresentativeDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return CompanyRepresentativeDb;

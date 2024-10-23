@@ -39,9 +39,9 @@ public class ProcessResourceRepository : IProcessResourceRepository
             return null; // Retorna null se o ProcessResource não for encontrado
         }
 
+        processResourceDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
         processResourceDb.id_process = processResource.id_process;
         processResourceDb.id_resource = processResource.id_resource;
-        processResourceDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
 
         await _dbContext.SaveChangesAsync();
         return processResourceDb;

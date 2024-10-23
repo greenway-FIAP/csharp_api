@@ -1,5 +1,6 @@
 ﻿using ApiGreenway.Data;
 using ApiGreenway.Models;
+using ApiGreenway.Models.Dtos;
 using ApiGreenway.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,7 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.id_user == UserId && u.dt_finished_at == null);
     }
 
+    /*
     public async Task<User> AddUser(User user)
     {
         // Verifica se o Email já está cadastrado
@@ -50,7 +52,9 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.ds_email == ds_email && u.dt_finished_at == null);
     }
 
-    public async Task<User> UpdateUser(User user)
+    */
+
+    public async Task<User> UpdateUser(UserUpdateDto user)
     {
         var userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.id_user == user.id_user);
         if (userDb == null)
@@ -67,8 +71,6 @@ public class UserRepository : IUserRepository
         }
 
         userDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
-        userDb.id_user_type = user.id_user_type;
-        userDb.id_company_representative = user.id_company_representative;
 
         await _dbContext.SaveChangesAsync();
         return userDb;

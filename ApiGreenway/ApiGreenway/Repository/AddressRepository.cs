@@ -47,6 +47,7 @@ public class AddressRepository : IAddressRepository
         addressDb.ds_neighborhood = address.ds_neighborhood;
         addressDb.ds_city = address.ds_city;
         addressDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+        addressDb.id_company = address.id_company;
 
         await _dbContext.SaveChangesAsync();
         return addressDb;
