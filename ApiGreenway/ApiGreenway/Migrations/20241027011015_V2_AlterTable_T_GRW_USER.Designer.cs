@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20241021065458_initial")]
-    partial class initial
+    [Migration("20241027011015_V2_AlterTable_T_GRW_USER")]
+    partial class V2_AlterTable_T_GRW_USER
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -822,6 +822,9 @@ namespace ApiGreenway.Migrations
 
                     b.Property<string>("ds_password")
                         .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ds_uid_fb")
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTimeOffset>("dt_created_at")
