@@ -40,11 +40,6 @@ namespace ApiGreenway.Controllers
         {
             try
             {
-                if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
-                {
-                    return BadRequest("E-mail ou senha inválidos.");
-                }
-
                 string token = await _authService.LoginAsync(request);
                 return Ok(token);
             }
