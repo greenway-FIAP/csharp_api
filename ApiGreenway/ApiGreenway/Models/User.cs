@@ -12,8 +12,11 @@ public class User
     [JsonIgnore]
     public int id_user { get; set; }
 
-    public string ds_email { get; set; } = string.Empty;
-    public string ds_password { get; set; } = string.Empty;
+    [JsonIgnore]
+    public string? ds_uid_fb { get; set; }
+
+    public string ds_email { get; set; }
+    public string ds_password { get; set; }
 
     [JsonIgnore]
     public DateTimeOffset dt_created_at { get; set; } = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
