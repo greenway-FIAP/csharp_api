@@ -10,5 +10,5 @@ public interface IAuthService
 
     Task<string> UpdateUserByEmailAsync(string oldEmail, UserUpdateDto request);
 
-    void DeleteAsync(int userId);
+    Task<string> DeleteAsync(int userId);
 }

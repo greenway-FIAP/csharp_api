@@ -2,7 +2,6 @@
 using ApiGreenway.Models;
 using ApiGreenway.Models.Dtos;
 using FirebaseAdmin.Auth;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiGreenway.Services.Authentication
@@ -20,70 +19,82 @@ namespace ApiGreenway.Services.Authentication
         }
 
         // Método para autenticar um usuário e retornar um token
+        /// <inheritdoc/>
         public async Task<string> LoginAsync(UserLoginDTO request)
         {
+            if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
+            {
+                return "E-mail ou senha inválidos!";
+            }
+
             // Cria um objeto com as credenciais do usuário
             var credentials = new
             {
                 request.ds_email,
                 request.ds_password,
-                returnSecureToken = true, // Solicita um token de autenticação
+                returnSecureToken = true,
             };
 
             // Envia uma solicitação POST para autenticar o usuário
-            var response = await _httpClient.PostAsJsonAsync("", credentials);
+            var response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, credentials);
 
-            // Lê a resposta como um objeto AuthFirebase
             var authFirebaseObject = await response.Content.ReadFromJsonAsync<AuthFirebase>();
-
-            // Retorna o token de autenticação
             return authFirebaseObject!.IdToken!;
         }
 
+        /// <inheritdoc/>
         public async Task<string> RegisterAsync(UserRegisterDTO request)
         {
-            // Valida os dados de entrada
-            if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
+            try
             {
-                throw new ArgumentException("E-mail e senha são obrigatórios.");
+                // Valida os dados de entrada
+                if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
+                {
+                    throw new ArgumentException("E-mail e senha são obrigatórios.");
+                }
+
+                // Prepara os argumentos para criar um novo usuário no Firebase
+                var userArgs = new UserRecordArgs
+                {
+                    Email = request.ds_email,
+                    Password = request.ds_password, // Usamos a senha sem criptografar, pois o Firebase lida com isso.
+                    Disabled = false
+                };
+
+                // Cria o usuário no Firebase
+                var newUserDb = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArgs);
+
+                // Cria um novo objeto User para o banco de dados
+                var newUser = new User
+                {
+                    ds_email = newUserDb.Email,
+                    ds_password = BCrypt.Net.BCrypt.HashPassword(request.ds_password), // Criptografa a senha para o banco de dados
+                    ds_uid_fb = newUserDb.Uid, // Salva o UID do Firebase
+                    id_user_type = request.id_user_type,
+                    id_company_representative = request.id_company_representative,
+                };
+
+                // Adiciona o novo usuário ao banco de dados
+                await _dbContext.Users.AddAsync(newUser);
+                await _dbContext.SaveChangesAsync(); // Salva as mudanças
+
+                // Retorna o Uid do novo usuário
+                return "Usuário cadastrado com sucesso! \n ID do usuário (BD): " + newUser.id_user + " \n Uid (FB): " + newUserDb.Uid;
             }
-
-            // Prepara os argumentos para criar um novo usuário no Firebase
-            var userArgs = new UserRecordArgs
+            catch (Exception ex)
             {
-                Email = request.ds_email,
-                Password = request.ds_password, // Usamos a senha sem criptografar, pois o Firebase lida com isso.
-                Disabled = false
-            };
-
-            // Cria o usuário no Firebase
-            var newUserDb = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArgs);
-
-            // Cria um novo objeto User para o banco de dados
-            var newUser = new User
-            {
-                ds_email = newUserDb.Email,
-                ds_password = BCrypt.Net.BCrypt.HashPassword(request.ds_password), // Criptografa a senha para o banco de dados
-                ds_uid_fb = newUserDb.Uid, // Salva o UID do Firebase
-                id_user_type = request.id_user_type,
-                id_company_representative = request.id_company_representative,
-            };
-
-            // Adiciona o novo usuário ao banco de dados
-            await _dbContext.Users.AddAsync(newUser);
-            await _dbContext.SaveChangesAsync(); // Salva as mudanças
-
-            // Retorna o Uid do novo usuário
-            return newUserDb.Uid;
+                throw new Exception("Erro ao registrar usuário: " + ex.Message, ex);
+            }
         }
 
         // Método para atualizar os dados de um usuário existente
+        /// <inheritdoc/>
         public async Task<string> UpdateUserByEmailAsync(string oldEmail, UserUpdateDto request)
         {
             try
             {
                 // Busca o usuário no banco de dados pelo ID
-                var userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.ds_email == oldEmail && u.ds_uid_fb != null && u.dt_finished_at == null)
+                var userDb = await _dbContext.Users.FirstOrDefaultAsync(r => r.ds_email == oldEmail && r.dt_finished_at == null)
                     ?? throw new Exception("Usuário não encontrado");
 
                 // Prepara os argumentos para atualizar o usuário no Firebase
@@ -96,21 +107,20 @@ namespace ApiGreenway.Services.Authentication
                 };
 
                 // Atualiza o usuário no Firebase
-                var updateUserDb = await FirebaseAuth.DefaultInstance.UpdateUserAsync(userArgs);
+                await FirebaseAuth.DefaultInstance.UpdateUserAsync(userArgs);
 
                 // Atualiza o usuário no banco de dados
                 userDb.ds_email = request.ds_email; // Atualiza o e-mail no banco de dados
                 if (request.ds_password != null)
                 {
-                    userDb.ds_password = BCrypt.Net.BCrypt.HashPassword(request.ds_password);
+                    userDb.ds_password = BCrypt.Net.BCrypt.HashPassword(request.ds_password); // Atualiza a senha no banco de dados (se fornecida)
                 }
-                userDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
+                userDb.dt_updated_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // Insere a data de atualização do dado no formato UTC-3 Brasília
 
                 // Salva as alterações no banco de dados
-                _dbContext.Users.Update(userDb);
                 await _dbContext.SaveChangesAsync();
 
-                return updateUserDb.Uid;
+                return "Usuário atualizado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -118,32 +128,45 @@ namespace ApiGreenway.Services.Authentication
             }
         }
 
-        public async void DeleteAsync(int userId)
+        // Método para desativar um usuário
+        /// <inheritdoc/>
+        public async Task<string> DeleteAsync(int userId)
         {
-            // Busca o usuário no banco de dados pelo ID
-            var userDb = await _dbContext.Users.FirstOrDefaultAsync(r => r.id_user == userId && r.ds_uid_fb != null && r.dt_finished_at == null);
-
-            // Verifica se o usuário existe
-            if (userDb == null)
+            try
             {
-                throw new Exception("Usuário não encontrado");
+                var userDb = await _dbContext.Users.FirstOrDefaultAsync(r => r.id_user == userId);
+                if (userDb != null)
+                {
+                    var uidFirebase = userDb.ds_uid_fb;
+
+                    if (string.IsNullOrEmpty(uidFirebase))
+                    {
+                        throw new Exception("UID do Firebase não encontrado.");
+                    }
+
+                    userDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3));
+
+                    await _dbContext.SaveChangesAsync();
+
+                    var userArgs = new UserRecordArgs
+                    {
+                        Uid = uidFirebase,
+                        Disabled = true,
+                    };
+
+                    await FirebaseAuth.DefaultInstance.UpdateUserAsync(userArgs);
+                    
+                    return "Usuário desativado com sucesso";
+                }
+                else
+                {
+                    throw new Exception("Usuário não encontrado.");
+                }
             }
-
-            // Prepara os argumentos para desativar o usuário no Firebase
-            var userArgs = new UserRecordArgs
+            catch (Exception ex)
             {
-                Uid = userDb.ds_uid_fb, // UID correto do Firebase
-                Disabled = true, // Marca o usuário como desativado
-            };
-
-            // Atualiza o usuário no Firebase
-            await FirebaseAuth.DefaultInstance.UpdateUserAsync(userArgs);
-
-            // Marca o usuário como desativado no banco de dados
-            userDb.dt_finished_at = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-3)); // UTC-3 Brasília
-
-            // Salva as mudanças no banco de dados
-            await _dbContext.SaveChangesAsync();
+                throw new Exception("Erro ao desativar o usuário: " + ex.Message, ex);
+            }
         }
     }
 }
