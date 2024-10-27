@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20241027011015_V2_AlterTable_T_GRW_USER")]
-    partial class V2_AlterTable_T_GRW_USER
+    [Migration("20241027200128_V1_AddTables")]
+    partial class V1_AddTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

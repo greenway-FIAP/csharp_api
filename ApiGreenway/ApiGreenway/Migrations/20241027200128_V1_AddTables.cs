@@ -421,7 +421,7 @@ namespace ApiGreenway.Migrations
                 {
                     id_user = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    ds_uid_fb = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    ds_uid_fb = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
                     ds_email = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     ds_password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     dt_created_at = table.Column<DateTimeOffset>(type: "TIMESTAMP(7) WITH TIME ZONE", nullable: false),
