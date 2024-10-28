@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ApiGreenway.Controllers
 {
+    /// <summary>
+    /// Controlador para a entidade User.
+    /// </summary>
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -106,7 +109,7 @@ namespace ApiGreenway.Controllers
         /// <response code="400">Dados inválidos.</response>
         /// <response code="500">Erro ao adicionar dados no banco de dados.</response>
         [HttpPost("register")]
-        public async Task<ActionResult<string>> Register([FromBody] UserRegisterDTO request)
+        public async Task<ActionResult<string>> Register([FromBody] User request)
         {
             try
             {
@@ -130,7 +133,6 @@ namespace ApiGreenway.Controllers
         /// <summary>
         /// Atualiza um usuário existente.
         /// </summary>
-        /// <param name="userId">O ID do usuário no banco de dados.</param>
         /// <param name="oldEmail">O e-mail antigo do usuário a ser atualizado.</param>
         /// <param name="request">Os novos dados do usuário.</param>
         /// <returns>O usuário atualizado.</returns>
@@ -164,18 +166,40 @@ namespace ApiGreenway.Controllers
         /// <returns>Uma mensagem de sucesso.</returns>
         /// <response code="200">Usuário desativado com sucesso.</response>
         /// <response code="404">Usuário não encontrado.</response>
-        /// <response code="500">Erro ao deletar os dados do banco de dados.</response>
+        /// <response code="500">Erro ao deletar o usuário do banco de dados.</response>
         [HttpDelete("{userId:int}")]
         public async Task<ActionResult<string>> DeleteUser(int userId)
         {
             try
             {
-                _authService.DeleteAsync(userId);
+                await _authService.DeleteAsync(userId);
                 return Ok("Usuário foi desativado com sucesso!");
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao deletar os dados do Banco de Dados: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao desativar o usuário do Banco de Dados: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Reativa um usuário pelo ID.
+        /// </summary>
+        /// <param name="userId">O ID do usuário a ser reativado.</param>
+        /// <returns>Uma mensagem de sucesso.</returns>
+        /// <response code="200">Usuário reativado com sucesso.</response>
+        /// <response code="404">Usuário não encontrado.</response>
+        /// <response code="500">Erro ao reativar o usuário do banco de dados.</response>
+        [HttpPost("{userId:int}")]
+        public async Task<ActionResult<string>> ReactiveUser(int userId)
+        {
+            try
+            {
+                await _authService.ReactiveUserAsync(userId);
+                return Ok("Usuário foi reativado com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao reativar o usuário do Banco de Dados: {ex.Message}");
             }
         }
     }
