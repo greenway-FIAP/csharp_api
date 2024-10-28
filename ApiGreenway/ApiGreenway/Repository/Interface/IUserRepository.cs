@@ -5,6 +5,6 @@ namespace ApiGreenway.Repository.Interface;
 
 public interface IUserRepository
 {
-    Task<IEnumerable<User>> GetUsers();
-    Task<User> GetUserById(int UserId);
+    Task<IEnumerable<UserDetailedDTO>> GetUsers();
+    Task<UserDetailedDTO> GetUserById(int UserId);
 }
