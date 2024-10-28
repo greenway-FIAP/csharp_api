@@ -17,15 +17,27 @@ public class UserRepository : IUserRepository
 
     // Métodos CRUD
 
-    public async Task<IEnumerable<User>> GetUsers()
+    public async Task<IEnumerable<UserDetailedDTO>> GetUsers()
     {
-        var users = await _dbContext.Users.Where(u => u.dt_finished_at == null).ToListAsync() ?? throw new Exception("Não há usuários cadastrados!");
-        return users;
+        var users = await _dbContext.Users.Where(u => u.ds_uid_fb != null & u.dt_finished_at == null).ToListAsync() ?? throw new Exception("Não há usuários cadastrados!");
+
+        var usersDTO = users.Select(u => new UserDetailedDTO
+        {
+            id_user = u.id_user,
+            ds_email = u.ds_email,
+        });
+        return usersDTO;
     }
 
-    public async Task<User> GetUserById(int UserId)
+    public async Task<UserDetailedDTO> GetUserById(int UserId)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.id_user == UserId && u.dt_finished_at == null) ?? throw new Exception("Usuário não encontrado ou excluído!");
-        return user;
+
+        var userDTO = new UserDetailedDTO
+        {
+            id_user = user.id_user,
+            ds_email = user.ds_email,
+        };
+        return userDTO;
     }
 }
