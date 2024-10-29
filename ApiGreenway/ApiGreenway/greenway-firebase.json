@@ -1,0 +1,13 @@
+{
+  "type": "${{ variables.type }}",
+  "project_id": "${{ variables.project_id }}",
+  "private_key_id": "${{ variables.private_key_id }}",
+  "private_key": "${{ variables.private_key }}",
+  "client_email": "${{ variables.client_email }}",
+  "client_id": "${{ variables.client_id }}",
+  "auth_uri": "${{ variables.auth_uri }}",
+  "token_uri": "${{ variables.token_uri }}",
+  "auth_provider_x509_cert_url": "${{ variables.auth_provider_x509_cert_url }}",
+  "client_x509_cert_url": "${{ variables.client_x509_cert_url }}",
+  "universe_domain": "${{ variables.universe_domain }}"
+}
