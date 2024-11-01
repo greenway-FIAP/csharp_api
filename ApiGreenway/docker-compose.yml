@@ -3,4 +3,4 @@ services:
     image: ${DOCKER_REGISTRY-}apigreenway
     build:
       context: .
-      dockerfile: ApiGreenway/Dockerfile
+      dockerfile: ApiGreenway\Dockerfile
