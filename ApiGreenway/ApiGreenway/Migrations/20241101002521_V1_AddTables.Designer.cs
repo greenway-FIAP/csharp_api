@@ -12,7 +12,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace ApiGreenway.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20241027200128_V1_AddTables")]
+    [Migration("20241101002521_V1_AddTables")]
     partial class V1_AddTables
     {
         /// <inheritdoc />
@@ -825,6 +825,7 @@ namespace ApiGreenway.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("ds_uid_fb")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTimeOffset>("dt_created_at")

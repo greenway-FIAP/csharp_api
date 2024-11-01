@@ -1,13 +1,13 @@
 {
-  "type": "${{ variables.type }}",
-  "project_id": "${{ variables.project_id }}",
-  "private_key_id": "${{ variables.private_key_id }}",
-  "private_key": "${{ variables.private_key }}",
-  "client_email": "${{ variables.client_email }}",
-  "client_id": "${{ variables.client_id }}",
-  "auth_uri": "${{ variables.auth_uri }}",
-  "token_uri": "${{ variables.token_uri }}",
-  "auth_provider_x509_cert_url": "${{ variables.auth_provider_x509_cert_url }}",
-  "client_x509_cert_url": "${{ variables.client_x509_cert_url }}",
-  "universe_domain": "${{ variables.universe_domain }}"
+  "type": "service_account",
+  "project_id": "greenway-auth",
+  "private_key_id": "a26a0e6c406d3613b28a0f8644894bf70c02c59b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDPZ6alWGMmXMqt\ncf5Dnk28nANeGwWd8koGYhOp2Hk/3Mmh2/q6fIu7IDAA8gajYnLLM+iWFXmP0njo\n/gmpt4k/y2N0/dobF0sfGfgFRwf8uNursru+aAGDHAla96D8iW3GEHAWu9lXoRlS\n7scR1n06q08dE2bWU4NieMcFlrMcJk41uiY6NcMKC6R6nNaFIbyBnUO7YgBsGfvd\necllCLeFOA2g+FCXjn+L23Qa9d03H2Z4G0vPQR2F3ZbEoTHCuMExpzMVyxIJfLsx\nA2GQpDj4f/4Bjk2Mhbc8YqhP4qkLFh0HYGfhZ1Myr3yCY9tZEWWTaISDXLHQ5wPq\nJ3xHKn+LAgMBAAECggEAUafTOkHEN3RM72Bz5JdMr7cUtFYbLgYYEs9GQpZRlk0M\nrUb4PbePI8sWWyjuaCD4ZPw40+38gB0zMTfjAgiaZp1iuMrAte3Dy6jjtuAyStNU\n2RJzTBGSltXQ8RmRLhvFNjd+idTHSvLID5imk2VIxHJxoVbkI/mZPomigZbFSY0t\nfaqKXEWRfndUN00KRyR2WtHDbhZio8wW8UzdUlzBv61SPYg7QhlacoKQ+IMUgJPc\nOOS8RG4J87tzDkalnYr8kcgowDH4FOqtEg5t7FjkJ9R3yobxWsIVPETweBQRSjNG\nWKUplbY88D+7G+igUpfsi3jI+20V4PTgOPorcFyEMQKBgQDz6v4cr+gUHv6uLKC9\nZdLLSbby+y5ne4+h6wp30JrIpJX7GXE+u+rl2quv9SLHnVh21jGtz24XlsaUt9UO\nsVwqgKszyBDjz7yWPsH4znWXQCJIKX5PMbka4dFRTnCn0IoYp4Qa4eCJ4lOnMHnp\n7MtKW5K6DI8k49MdxWrKy7mphQKBgQDZradXHraO3uX2iVgEXUCPjmBKXNjs9HE9\n+U11qa5S7HgQjnLDGJyhQPtYU+aFV6e7+PnbgJrm9ewE8ymj6MaheoHGvxDVhEZi\nnMZmaMeKRyc0RsL7gA0K27oSMspkx86BySKBKGfdJwm/VkgycA++b65gmOnBQLXU\nWGzhAH3JzwKBgCDdIou+76f2XR4eiTG7jGEzd2DZkvECZuHMB0cJZjFua36/eNCZ\nBRcfFU7J2nvGqWqphVwDvLOU7wCOnDg0kVRwraB2bkAjdydPIVdiidltHLFYVdpZ\nurTyg/9OcENMB682ssfkcxpg0iCOmX55FxLXr7c9hfPUdldmh/L26/b5AoGAbNqn\nNSzZtCaJLzlNd5k+gMt9IZK+s/glbQ1vi+iXkUZJYFYr055KLWV2i5whSgskiR6f\nrAHq9JaEOZF0AFCWjAfcQAwqGew02nl1yZ6aMm8UjtLYDLbjTsvEh/c4OR+mCEcR\n5y7SichM2o8GOZrKdLwaopm1Q3vdsduqTvZU8QcCgYEAnayYhsgVff/jL038T2mP\nGOtAGKndOiGY3Exxz16U/Q3gISdag9VhIFRA67+o70+72d21Ls80c3syTNsWRIz1\njy3AighE6dm2+JrjfxPJcZxZo0336Gd49bsxcWjOLQ6aBCz2JPafbpEGz1CUryVt\nacK0+e8bdbib0EShQcxZLUk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-jsf66@greenway-auth.iam.gserviceaccount.com",
+  "client_id": "104554357346927327287",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jsf66%40greenway-auth.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
 }

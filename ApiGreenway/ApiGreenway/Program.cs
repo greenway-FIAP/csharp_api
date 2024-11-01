@@ -20,6 +20,17 @@ builder.Services.AddDbContext<dbContext>(options =>
            .LogTo(Console.WriteLine, LogLevel.Information)
 );
 
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("greenway-firebase.json")
+});
+
+builder.Services.AddHttpClient<IAuthService, AuthService>((sp, httpClient) =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    httpClient.BaseAddress = new Uri(configuration["Authentication:TokenUri"]!);
+});
+
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IBadgeRepository, BadgeRepository>();
 builder.Services.AddScoped<IBadgeLevelRepository, BadgeLevelRepository>();
@@ -65,17 +76,6 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
-});
-
-FirebaseApp.Create(new AppOptions
-{
-    Credential = GoogleCredential.FromFile("greenway-firebase.json")
-});
-
-builder.Services.AddHttpClient<IAuthService, AuthService>((sp, httpClient) =>
-{
-    var configuration = sp.GetRequiredService<IConfiguration>();
-    httpClient.BaseAddress = new Uri(configuration["Authentication:TokenUri"]!);
 });
 
 var app = builder.Build();

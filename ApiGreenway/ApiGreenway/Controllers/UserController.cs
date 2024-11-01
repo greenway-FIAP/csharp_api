@@ -109,7 +109,7 @@ namespace ApiGreenway.Controllers
         /// <response code="400">Dados inválidos.</response>
         /// <response code="500">Erro ao adicionar dados no banco de dados.</response>
         [HttpPost("register")]
-        public async Task<ActionResult<string>> Register([FromBody] User request)
+        public async Task<ActionResult<string>> Register([FromBody] UserRegisterDTO request)
         {
             try
             {

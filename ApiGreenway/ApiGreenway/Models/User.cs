@@ -16,23 +16,23 @@ public class User
     /// </summary>
     [Key]
     [JsonIgnore]
-    public required int id_user { get; set; }
+    public int id_user { get; set; }
 
     /// <summary>
     /// Identificador único do usuário no Facebook
     /// </summary>
     [JsonIgnore]
-    public required string ds_uid_fb { get; set; }
+    public string? ds_uid_fb { get; set; }
 
     /// <summary>
     /// E-mail do usuário
     /// </summary>
-    public required string ds_email { get; set; }
+    public string? ds_email { get; set; }
 
     /// <summary>
     /// Senha do usuário
     /// </summary>
-    public required string ds_password { get; set; }
+    public string? ds_password { get; set; }
 
     /// <summary>
     /// Data e hora de criação do usuário

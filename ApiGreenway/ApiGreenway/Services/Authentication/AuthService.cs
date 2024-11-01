@@ -48,7 +48,7 @@ namespace ApiGreenway.Services.Authentication
         }
 
         /// <inheritdoc/>
-        public async Task<string> RegisterAsync(User user)
+        public async Task<string> RegisterAsync(UserRegisterDTO user)
         {
             try
             {
@@ -72,7 +72,6 @@ namespace ApiGreenway.Services.Authentication
                 // Cria um novo objeto User para o banco de dados
                 var newUser = new User
                 {
-                    id_user = user.id_user,
                     ds_email = newUserDb.Email,
                     ds_password = BCrypt.Net.BCrypt.HashPassword(user.ds_password), // Criptografa a senha para o banco de dados
                     ds_uid_fb = newUserDb.Uid, // Salva o UID do Firebase

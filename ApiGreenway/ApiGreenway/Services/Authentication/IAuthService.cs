@@ -11,7 +11,7 @@ public interface IAuthService
     /// <summary>
     /// Serviço de Registrar usuário.
     /// </summary>
-    Task<string> RegisterAsync(User request);
+    Task<string> RegisterAsync(UserRegisterDTO request);
 
     /// <summary>
     /// Serviço de Logar usuário.
