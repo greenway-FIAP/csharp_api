@@ -1,13 +1,13 @@
 {
-  "type": "$(TYPE)",
-  "project_id": "$(PROJECT_ID)",
-  "private_key_id": "$(PRIVATE_KEY_ID)",
-  "private_key": "$(PRIVATE_KEY)",
-  "client_email": "$(CLIENT_EMAIL)",
-  "client_id": "$(CLIENT_ID)",
-  "auth_uri": "$(AUTH_URI)",
-  "token_uri": "$(TOKEN_URI)",
-  "auth_provider_x509_cert_url": "$(AUTH_PROVIDER_X509_CERT_URL)",
-  "client_x509_cert_url": "$(CLIENT_X509_CERT_URL)",
-  "universe_domain": "$(UNIVERSE_DOMAIN)"
+  "type": "service_account",
+  "project_id": "greenway-61911",
+  "private_key_id": "d3497184865ce4cfafcccfca00b8592e3a66a4e1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVeY76si8M55n+\nkyHGIRUfSkvloKzBRZCPa51aqekI7ZEyrecJJVRkhoP7c7XYyXopDs7Rur3SpUEP\n9ZmzNII5Ebi2x6gTemme0LgCUU8gfV4aIlbJ5s1mx2WkUtXloeXA3DHDxuMEtg7/\ncWv+MXHBHPkpYLQBEXnMSFPgeNcCM4BuVFOV51J6A9gwZpa74GgrzUGb9NHh5CAP\n0bNgtK49Fj8lh0olfz4b5wHrnsE+VjWva/ZGOgzx620+3YFy3LHkGay/V6Q6x55d\nGsotubSBVgaqF9/BGTh578f68lCdgVNt7hKJQL2N1Rug5sq4YHW01Hd2WZ+rgENm\nCbJ/cp4NAgMBAAECggEAAh/DyuDP71ocY5qgPvCgaR0eqy9kO3jefyANEK+o1DIm\ncpBrEvblvJ0p8F+EEYXhB21Vvg0Hy1MC2i20yfAKLuWg3z2pSa5fJHa11Rgy5if+\nt6NbFV82XJ2i+AaFuJyOdClAFP0IcKKZRilmWsRFtNqEpeeUZA5Lnn4J0+V6GxnH\nrqt7EEUPUyg7SuB1EMDCfWjeQsA/2n46cxZ8Upl8FODoCdI3tuHNTrBvfvWoMVLs\nQ/gCrVtQyo/ZDuM9CydB7fcA6/M0+kru4084dW1lz+XYSWs798gIt+9wqK1jQqeQ\nYPmJPnJTZorBNB8jg7jxe2SmVXKeQXMnmXlW6ZC28QKBgQDSdk9yq0NZ5Su2+Nkb\nOdhNuCxMVQrXDX923zxV2G3qm8L5uOmB8ilEI9IY7r0j+c8mkYjgJKnbzKkynQQw\n0gcE9Eai5ZIXCMRqbg+B4/k/8JDexwukgNWujOjp6CuQehfv8EiG2KYUegt8ieCO\ntHz5c5iP3c/snSO22ABsQSwWdQKBgQC10RsGbKeLxwXNSt0Fvpv6vQjRURwB7/8i\nYccy9O+vmegd1VT7mqIKN5iAXjsaNT1diykILQ4vlbsQEgCyhFQunwbUlz3jbT9F\nPWJDvUUvrj/lX/MVSQEugfh+GzrhAL32IY5lLuwDacillW6gKpOTQKzuB2Jx6tDr\n7pChnRNmOQKBgQCM9yGPtJaQB6eYDmWcjsoKhGlnVy7DjA7sF+nZtfUpRtr5WJlO\nqFxrf3KhsIaPKitNsfzz5JrA1fweIn1EFekNsG//e7S2KPEmOEG6xm+UHBVsofVy\nYbi+CTOYOCG1y5Fs7IwnhcT3wicfa1o1Oz7Z9kshUXiLC1V4ioT9/UkCYQKBgHFP\n3NPoK5NFeiwzmAPYg0WFQlWRgy8B77Px1D/Bvw9lj+/n4IreGFbdx0FZeOQgghom\nfHAIBGtLmcWuMpkPN5fGrG8ZwwxWLbRtSSyGbPQGWPQPFGQTl5Twk3mkZtGLsNgQ\nmbodwCFwcAgiVUukvUxsZloCaCwu9/3SNHlEd66hAoGAOSbXTPNdBR2nkyswBrOo\n8O5KTFinGxJtHtqnUsH3WX3jG/PpruRrQeEoZ7OfAaIfsjihLMzZ9jHP+0w/QDpA\n4mRm+ab4KPUJmYNMuegsK+1UnIPCo0CoHc3khnKOg8JYAn/VXfm7Vv9CaqlTirqO\ntMTMRkd3g9qA4ziwiPjnVmI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-njk2w@greenway-61911.iam.gserviceaccount.com",
+  "client_id": "107212375960363488058",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-njk2w%40greenway-61911.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
 }
