@@ -3,6 +3,7 @@ using ApiGreenway.Models;
 using ApiGreenway.Models.Dtos;
 using FirebaseAdmin.Auth;
 using Microsoft.EntityFrameworkCore;
+using RestSharp;
 
 namespace ApiGreenway.Services.Authentication
 {
@@ -29,22 +30,29 @@ namespace ApiGreenway.Services.Authentication
         {
             if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
             {
-                return "E-mail ou senha inválidos!";
+                throw new ArgumentException("E-mail e senha são obrigatórios.");
             }
 
-            // Cria um objeto com as credenciais do usuário
-            var credentials = new
+            var loginData = new
             {
-                request.ds_email,
-                request.ds_password,
-                returnSecureToken = true,
+                email = request.ds_email,
+                password = request.ds_password,
+                returnSecureToken = true
             };
 
-            // Envia uma solicitação POST para autenticar o usuário
-            var response = await _httpClient.PostAsJsonAsync("", credentials);
+            var response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, loginData);
 
-            var authFirebaseObject = await response.Content.ReadFromJsonAsync<AuthFirebase>();
-            return authFirebaseObject!.IdToken!;
+            if (response.IsSuccessStatusCode)
+            {
+                var authResponse = await response.Content.ReadFromJsonAsync<AuthFirebase>();
+                if (authResponse != null && !string.IsNullOrEmpty(authResponse.IdToken))
+                {
+                    return authResponse.IdToken; // Retorna o token de autenticação
+                }
+                throw new Exception("Token não retornado!");
+            }
+
+            throw new Exception("Falha na autenticação: " + response.ReasonPhrase);
         }
 
         /// <inheritdoc/>

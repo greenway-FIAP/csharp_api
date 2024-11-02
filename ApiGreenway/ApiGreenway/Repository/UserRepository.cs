@@ -36,7 +36,7 @@ public class UserRepository : IUserRepository
         var userDTO = new UserDetailedDTO
         {
             id_user = user.id_user,
-            ds_email = user.ds_email,
+            ds_email = user.ds_email
         };
         return userDTO;
     }

@@ -2,9 +2,15 @@
 using ApiGreenway.Models.Dtos;
 using ApiGreenway.Repository.Interface;
 using ApiGreenway.Services.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ApiGreenway.Controllers
@@ -41,15 +47,44 @@ namespace ApiGreenway.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] UserLoginDTO request)
         {
+            if (request == null || string.IsNullOrEmpty(request.ds_email) || string.IsNullOrEmpty(request.ds_password))
+            {
+                return BadRequest("E-mail e senha são obrigatórios.");
+            }
+
             try
             {
                 string token = await _authService.LoginAsync(request);
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized("E-mail ou senha inválidos.");
+                }
+
                 return Ok(token);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao realizar login: {ex.Message}");
             }
+        }
+
+        [HttpPost("login-jwt")]
+        public IActionResult LoginJwt()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("dqXJIkw4i2uXIhNbOkhDT2KF5VMCXzs6bOe43lFkGMJ1qvncWaq74WFrnAWa1FEk");
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] {new Claim(ClaimTypes.Name, "user")}),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return Ok(new {Token = tokenString});
         }
 
 
@@ -82,6 +117,7 @@ namespace ApiGreenway.Controllers
         /// <response code="404">Usuário não encontrado.</response>
         /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
         [HttpGet("{userId:int}")]
+        [Authorize]
         public async Task<ActionResult<UserDetailedDTO>> GetUserById(int userId)
         {
             try
