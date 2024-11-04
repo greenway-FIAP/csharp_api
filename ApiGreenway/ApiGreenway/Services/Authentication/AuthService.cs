@@ -66,23 +66,36 @@ namespace ApiGreenway.Services.Authentication
                     throw new ArgumentException("E-mail e senha são obrigatórios.");
                 }
 
+                if (user.ds_password.Length < 6)
+                {
+                    throw new ArgumentException("A senha deve ter pelo menos 6 caracteres.");
+                }
+
                 // Prepara os argumentos para criar um novo usuário no Firebase
                 var userArgs = new UserRecordArgs
                 {
                     Email = user.ds_email,
-                    Password = user.ds_password, // Usamos a senha sem criptografar, pois o Firebase lida com isso.
+                    Password = user.ds_password,
                     Disabled = false
                 };
 
                 // Cria o usuário no Firebase
-                var newUserDb = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArgs);
+                UserRecord newUserFb;
+                try
+                {
+                    newUserFb = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArgs);
+                }
+                catch (FirebaseAuthException ex)
+                {
+                    throw new Exception("Erro ao criar usuário no Firebase: " + ex.Message, ex);
+                }
 
                 // Cria um novo objeto User para o banco de dados
                 var newUser = new User
                 {
-                    ds_email = newUserDb.Email,
+                    ds_email = newUserFb.Email,
                     ds_password = BCrypt.Net.BCrypt.HashPassword(user.ds_password), // Criptografa a senha para o banco de dados
-                    ds_uid_fb = newUserDb.Uid, // Salva o UID do Firebase
+                    ds_uid_fb = newUserFb.Uid, // Salva o UID do Firebase
                     id_user_type = user.id_user_type,
                     id_company_representative = user.id_company_representative,
                 };
@@ -91,8 +104,8 @@ namespace ApiGreenway.Services.Authentication
                 await _dbContext.Users.AddAsync(newUser);
                 await _dbContext.SaveChangesAsync(); // Salva as mudanças
 
-                // Retorna o Uid do novo usuário
-                return "Usuário cadastrado com sucesso! \n ID do usuário (BD): " + newUser.id_user + " \n Uid (FB): " + newUserDb.Uid;
+                // Retorna uma mensagem de sucesso com informações do novo usuário
+                return $"Usuário cadastrado com sucesso! ID do usuário (BD): {newUser.id_user}, UID (FB): {newUserFb.Uid}";
             }
             catch (Exception ex)
             {
@@ -141,6 +154,7 @@ namespace ApiGreenway.Services.Authentication
             }
         }
 
+
         // Método para desativar um usuário
         /// <inheritdoc/>
         public async Task<string> DeleteAsync(int userId)
@@ -168,7 +182,7 @@ namespace ApiGreenway.Services.Authentication
                     };
 
                     await FirebaseAuth.DefaultInstance.UpdateUserAsync(userArgs);
-                    
+
                     return "Usuário desativado com sucesso";
                 }
                 else
@@ -222,5 +236,7 @@ namespace ApiGreenway.Services.Authentication
                 throw new Exception("Erro ao reativar o usuário: " + ex.Message, ex);
             }
         }
+
+        
     }
 }

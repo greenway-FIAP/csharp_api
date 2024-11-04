@@ -68,26 +68,6 @@ namespace ApiGreenway.Controllers
             }
         }
 
-        [HttpPost("login-jwt")]
-        public IActionResult LoginJwt()
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("dqXJIkw4i2uXIhNbOkhDT2KF5VMCXzs6bOe43lFkGMJ1qvncWaq74WFrnAWa1FEk");
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] {new Claim(ClaimTypes.Name, "user")}),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return Ok(new {Token = tokenString});
-        }
-
-
         /// <summary>
         /// Obtém todos os usuários.
         /// </summary>
@@ -117,7 +97,6 @@ namespace ApiGreenway.Controllers
         /// <response code="404">Usuário não encontrado.</response>
         /// <response code="500">Erro ao recuperar os dados do banco de dados.</response>
         [HttpGet("{userId:int}")]
-        [Authorize]
         public async Task<ActionResult<UserDetailedDTO>> GetUserById(int userId)
         {
             try
@@ -238,5 +217,7 @@ namespace ApiGreenway.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao reativar o usuário do Banco de Dados: {ex.Message}");
             }
         }
+
+        
     }
 }

@@ -32,4 +32,6 @@ public interface IAuthService
     /// Serviço de Reativar usuário.
     /// </summary>
     Task<string> ReactiveUserAsync(int userId);
+
+    
 }

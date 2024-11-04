@@ -73,55 +73,9 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Insira 'Bearer' [espaço] e o token JWT"
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
-});
-
-// Configuração de Autenticação JWT
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
-
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidateAudience = false
-    };
 });
 
 var app = builder.Build();
@@ -132,7 +86,6 @@ app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", 
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
