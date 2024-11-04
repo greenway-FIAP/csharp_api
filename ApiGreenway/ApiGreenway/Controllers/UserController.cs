@@ -217,7 +217,5 @@ namespace ApiGreenway.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao reativar o usuário do Banco de Dados: {ex.Message}");
             }
         }
-
-        
     }
 }

@@ -236,7 +236,5 @@ namespace ApiGreenway.Services.Authentication
                 throw new Exception("Erro ao reativar o usuário: " + ex.Message, ex);
             }
         }
-
-        
     }
 }
