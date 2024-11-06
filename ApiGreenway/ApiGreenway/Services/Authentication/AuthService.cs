@@ -236,5 +236,25 @@ namespace ApiGreenway.Services.Authentication
                 throw new Exception("Erro ao reativar o usuário: " + ex.Message, ex);
             }
         }
+
+        // Método para enviar um e-mail de redefinição de senha
+        /// <inheritdoc/>
+        public async Task<string> ForgotPasswordUserAsync(string actualEmail)
+        {
+            if (string.IsNullOrEmpty(actualEmail))
+            {
+                throw new ArgumentException("O E-mail é obrigatório!");
+            }
+
+            try
+            {
+                var response = await FirebaseAuth.DefaultInstance.GeneratePasswordResetLinkAsync(actualEmail);
+                return "E-mail de redefinição de senha enviado com sucesso! \n" + response;
+            }
+            catch (FirebaseAuthException ex)
+            {
+                throw new Exception("Erro ao enviar e-mail de redefinição de senha: " + ex.Message, ex);
+            }
+        }
     }
 }

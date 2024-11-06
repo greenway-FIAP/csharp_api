@@ -217,5 +217,27 @@ namespace ApiGreenway.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao reativar o usuário do Banco de Dados: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Redefine a senha pelo E-mail
+        /// </summary>
+        /// <param name="actualEmail">O E-mail do usuário a ser enviado o link de redefinição.</param>
+        /// <returns>Uma mensagem de sucesso.</returns>
+        /// <response code="200">Link Enviado com sucesso.</response>
+        /// <response code="404">Usuário não encontrado.</response>
+        /// <response code="500">Erro ao enviar e-mail de redefinição de senha.</response>
+        [HttpPost("{actualEmail}")]
+        public async Task<ActionResult<string>> ForgotPassword(string actualEmail)
+        {
+            try
+            {
+                var result = await _authService.ForgotPasswordUserAsync(actualEmail);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
